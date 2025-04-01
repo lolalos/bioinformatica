@@ -16,8 +16,8 @@ def transcribe_dna_to_rna(input_fasta):
 if __name__ == "__main__":
     # Archivos de entrada
     files = [
-        "D:\\bioinformatica\\tarea2\\transcripcion_traduccion_01.fasta",
-        "D:\\bioinformatica\\tarea2\\transcripcion_traduccion_02.fasta"
+        r"C:\Users\LOVIT\OneDrive\Documentos\GitHub\bioinformatica\tarea2\transcripcion_traduccion_01.fasta",
+        r"C:\Users\LOVIT\OneDrive\Documentos\GitHub\bioinformatica\tarea2\transcripcion_traduccion_02.fasta"
     ]
 
     for input_fasta in files:

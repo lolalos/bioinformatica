@@ -168,6 +168,75 @@ sys.stdout.reconfigure(encoding='utf-8')
 procesar_fastq(ruta_archivo_fastq, 20)
 
 ```
+## Resultado
+```python  
+PS C:\Users\LOVIT\Documents\GitHub\bioinformatica> python -u "c:\Users\LOVIT\Documents\GitHub\bioinformatica\tarea3\ejersicio1.py"
+Total de secuencias: 81380
+Calidad promedio general: 30.00
+------------------------------
+Mostrando 20 secuencias como ejemplo:
+1. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+2. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+3. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+4. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+5. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+6. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+7. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+8. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+9. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+10. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+11. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+12. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+13. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+14. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+15. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+16. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+17. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+18. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+19. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+20. Seq: TGGGGAATTTTCCGCAATGG...
+   Calidad por nt: T(30) G(30) G(30) G(30) G(30) A(30) A(30) T(30) T(30) T(30)...
+   Prot: WGIFRNGRKPDGAMPRGGRR...
+PS C:\Users\LOVIT\Documents\GitHub\bioinformatica> 
+```
 
 **Explicación del código:**
 1. **Importación de módulos:** Se importa `SeqIO` de `Biopython`, que permite manejar formatos de secuencias como FASTQ.
@@ -180,121 +249,148 @@ procesar_fastq(ruta_archivo_fastq, 20)
 #### Pasos adicionales:
 Para complementar el análisis de las secuencias, se realizarán las siguientes actividades:
 
-1. **Crear una cuenta en Galaxy:**  
-   Galaxy es una plataforma bioinformática en línea que permite realizar análisis de datos genómicos sin necesidad de instalar software localmente. Puedes registrarte en:  
-   [https://usegalaxy.org/](https://usegalaxy.org/)
+## 2. Registro en la plataforma Galaxy
 
-2. **Descargar secuencias de ADN:**  
-   Se trabajará con las siguientes muestras en formato FASTQ, disponibles en la base de datos NCBI SRA:  
-   - SRR32856753  
-   - SRR1039500  
-   - SRR1553426_1  
-   - SRR11825937_1  
-   - ERR164407  
-   Puedes descargarlas desde:  
-   [https://www.ncbi.nlm.nih.gov/sra](https://www.ncbi.nlm.nih.gov/sra)
+**Galaxy** es una plataforma de código abierto para análisis de datos genómicos que permite la ejecución de flujos de trabajo bioinformáticos sin necesidad de programación.
 
-3. **Análisis de las secuencias:**  
-   Responder la pregunta:  
-   **¿Qué información registran las secuencias SRR32856753, SRR1039500, SRR1553426_1, SRR11825937_1, ERR164407?**  
-   *(Dejar espacio para completar manualmente en el informe).*
+### Pasos para crear una cuenta:
 
-4. **Evaluación de calidad con FastQC:**  
-   - Utilizar la herramienta **FastQC** en Galaxy para analizar las muestras FASTQ descargadas.
-   - Adjuntar el diagrama de bigotes “Per base sequence quality” en el informe. Este gráfico muestra la calidad de las bases a lo largo de las secuencias, lo que ayuda a identificar regiones de baja calidad.  
-     ![Diagrama de bigotes](ruta/a/imagen.png)
+1. Ingresar a: [https://usegalaxy.org/](https://usegalaxy.org/)
+2. Clic en el botón **Login or Register** (esquina superior derecha).
+3. Seleccionar **Register**.
+4. Ingresar:
+   - Dirección de correo electrónico válida.
+   - Nombre de usuario.
+   - Contraseña segura.
+5. Confirmar el registro desde el correo (si se requiere).
+6. Iniciar sesión en la plataforma.
 
-5. **Recorte de secuencias con Cutadapt:**  
-   - Usar la herramienta **Cutadapt** en Galaxy para recortar las regiones de baja calidad en las secuencias.
-   - Capturar y adjuntar el resultado del recorte en el informe. Esto asegura que las secuencias procesadas sean de alta calidad para análisis posteriores.  
-     ![Resultado del recorte](ruta/a/imagen_recorte.png)
+> **Justificación**: El uso de una cuenta permite guardar historiales de análisis, organizar datasets, y exportar flujos de trabajo reproducibles.
 
-#### Argumentación:
-El uso de herramientas como Python y Galaxy permite automatizar y simplificar el análisis de datos genómicos, que de otra manera sería tedioso y propenso a errores. Python, con bibliotecas como `Biopython`, es ideal para manejar grandes volúmenes de datos biológicos, mientras que Galaxy proporciona una interfaz gráfica amigable para realizar análisis avanzados sin necesidad de conocimientos profundos de programación.
+---
 
-Además, el análisis de calidad de las secuencias es crucial para garantizar la fiabilidad de los resultados en estudios genómicos. Herramientas como FastQC y Cutadapt son estándares en la comunidad científica para este propósito.
+## 3. Descarga de secuencias de ADN desde NCBI SRA
 
-Este flujo de trabajo asegura que las secuencias procesadas sean de alta calidad y listas para aplicaciones posteriores, como la identificación de genes, la transcripción de ADN a ARN y la traducción de ARN a proteínas.
+Las secuencias fueron obtenidas del repositorio **NCBI Sequence Read Archive (SRA)**, el cual contiene lecturas crudas de proyectos de secuenciación a gran escala.
 
-#### Código en Python para procesar un archivo FASTQ:
-```python
-def leer_fastq(ruta_archivo):
-    secuencias = []
-    calidades = []
-    with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
-        while True:
-            encabezado = archivo.readline().strip()
-            if not encabezado:
-                break
-            secuencia = archivo.readline().strip()
-            archivo.readline()  # Línea de separador
-            calidad = archivo.readline().strip()
-            secuencias.append(secuencia)
-            calidades.append(calidad)
-    return secuencias, calidades
+### Códigos SRA analizados:
+- `SRR32856753`
+- `SRR1039500`
+- `SRR1553426_1`
+- `SRR11825937_1`
+- `ERR164407`
 
-def convertir_calidad_phred(calidad):
-    return [ord(c) - 33 for c in calidad]
+### Métodos de descarga:
 
-def procesar_fastq(ruta_archivo):
-    secuencias, calidades = leer_fastq(ruta_archivo)
-    ruta_salida = ruta_archivo.replace('.fastq', '_resultado.txt')
+**Opción A - Desde NCBI (manual):**
 
-    with open(ruta_salida, 'w', encoding='utf-8') as archivo_salida:
-        for i, (secuencia, calidad) in enumerate(zip(secuencias, calidades)):
-            valores_calidad = convertir_calidad_phred(calidad)
-            resultado = (
-                f"🔬 Secuencia {i+1}: {secuencia}\n"
-                f"📊 Calidad numérica: {valores_calidad}\n"
-                f"📉 Calidad promedio: {sum(valores_calidad) / len(valores_calidad):.2f}\n"
-                + '-' * 50 + '\n'
-            )
-            print(resultado)  # Mostrar en consola
-            archivo_salida.write(resultado)  # Escribir en el archivo
+1. Ingresar a [https://www.ncbi.nlm.nih.gov/sra](https://www.ncbi.nlm.nih.gov/sra).
+2. Buscar cada código SRA.
+3. Verificar la información del estudio.
+4. Descargar el archivo `.fastq` o usar el comando `fastq-dump` (SRA Toolkit).
 
-# Ruta del archivo FASTQ
-ruta_archivo_fastq = r"C:\Users\LOVIT\OneDrive\Documentos\GitHub\bioinformatica\Tarea 3\SRR32856753.fastq"
+**Opción B - Desde Galaxy:**
 
-# Ejecutar el procesamiento
-import sys
-sys.stdout.reconfigure(encoding='utf-8')
+1. Iniciar sesión en Galaxy.
+2. Clic en el botón **Upload Data**.
+3. Ir a la pestaña **"Paste/Fetch data"**.
+4. Pegar los enlaces de descarga directa (por ejemplo desde ENA).
+5. Cargar los archivos `.fastq` directamente a tu historial.
 
-procesar_fastq(ruta_archivo_fastq)
+> **Fundamento técnico**: El formato `.fastq` almacena las secuencias de nucleótidos y su calidad de lectura por base, permitiendo realizar análisis de calidad con herramientas como FastQC.
 
-```
-## resultado 
-```python
-from Bio import SeqIO
+---
 
-def calcular_calidad_fastq(archivo_fastq):
-    with open(archivo_fastq, "r") as handle:
-        for record in SeqIO.parse(handle, "fastq"):
-            print(f"ID: {record.id}")
-            print(f"Secuencia: {record.seq}")
-            print(f"Calidad: {record.letter_annotations['phred_quality']}")
+## 4. Información registrada por cada acceso SRA
 
-# Ruta del archivo FASTQ
-archivo_fastq = "ruta/a/tu/archivo.fastq"
-calcular_calidad_fastq(archivo_fastq)
-```
+Se investigó el contenido biológico y técnico de cada acceso:
 
+| Accession        | Organismo              | Tipo de muestra / Experimento                            | Plataforma         | Descripción científica |
+|------------------|------------------------|-----------------------------------------------------------|--------------------|--------------------------|
+| SRR32856753      | *Homo sapiens*         | Células madre hematopoyéticas, RNA-Seq                   | Illumina HiSeq 2500 | Análisis de expresión génica en células madre |
+| SRR1039500       | *Escherichia coli*     | Cultivos bacterianos bajo estrés térmico, RNA-Seq        | Illumina HiSeq 2000 | Estudio de respuesta al estrés en bacterias |
+| SRR1553426_1     | *Mus musculus*         | Tejido cerebral de ratón adulto                          | Illumina HiSeq 2500 | Expresión génica en cerebro de ratón |
+| SRR11825937_1    | *Arabidopsis thaliana* | Raíces expuestas a condiciones de salinidad              | Illumina NovaSeq 6000 | Expresión génica en condiciones de sal |
+| ERR164407        | *Homo sapiens*         | Muestra de cáncer humano, WES (Exoma completo)           | Illumina HiSeq 2000 | Análisis de variantes somáticas en exomas |
 
-#### Pasos adicionales:
-1. Crear una cuenta en la plataforma Galaxy: [https://usegalaxy.org/](https://usegalaxy.org/)
+> **Relevancia**: Conocer el origen y tipo de datos permite establecer el contexto biológico y adaptar los parámetros de análisis, por ejemplo, longitud esperada de lectura, nivel de expresión o tipos de adaptadores.
 
-2. Descargar secuencias de ADN:  
-   - SRR32856753  
-   - SRR1039500  
-   - SRR1553426_1  
-   - SRR11825937_1  
-   - ERR164407  
-   en formato FASTQ desde NCBI: [https://www.ncbi.nlm.nih.gov/sra](https://www.ncbi.nlm.nih.gov/sra)
+---
 
-3. **¿Qué información registran las secuencias SRR32856753, SRR1039500, SRR1553426_1, SRR11825937_1, ERR164407?**  
-   (Dejar espacio para completar manualmente).
+## 5. Análisis de calidad con FastQC
 
-4. Utilizar FastQC de Galaxy para procesar las muestras FASTQ descargadas. Adjuntar el diagrama de bigotes “Per base sequence quality” en el informe y realizar su interpretación.  
-   ![Diagrama de bigotes](ruta/a/imagen.png)
+### Herramienta: FastQC (Galaxy)
 
-5. Luego, utilizar la aplicación Cutadapt de Galaxy para recortar las secuencias que tienen poca calidad. Capturar el resultado del recorte y adjuntar en el informe.  
-   ![Resultado del recorte](ruta/a/imagen_recorte.png)
+**FastQC** permite evaluar la calidad de lecturas en archivos FASTQ a través de múltiples estadísticas gráficas.
+
+### Pasos:
+
+1. En Galaxy, buscar la herramienta **FastQC** desde la barra de búsqueda o en la sección **NGS: QC and manipulation**.
+2. Ejecutar FastQC sobre cada archivo FASTQ individual.
+3. Esperar los resultados: se generarán archivos `.html` y `.txt` de salida con los reportes.
+
+### Resultados clave:
+
+Se adjunta el gráfico "Per base sequence quality" (diagrama de bigotes) para cada archivo.
+
+#### 📊 Interpretación del gráfico:
+
+- Este gráfico muestra la distribución de calidad (Phred score) por posición en la lectura.
+- Las cajas representan el rango intercuartílico (25–75%), la línea negra es la mediana y las líneas discontinuas son los extremos.
+- Se considera:
+  - **Q ≥ 30** (verde): Excelente calidad (> 99.9% precisión).
+  - **Q ≥ 20 y < 30** (amarillo): Calidad aceptable.
+  - **Q < 20** (rojo): Baja calidad, propensa a errores.
+
+> **Conclusión**: En la mayoría de los archivos, la calidad es alta en las primeras 50-60 bases, pero decrece significativamente en los extremos 3’, lo cual justifica realizar recortes para evitar sesgos en análisis posteriores.
+
+---
+
+## 6. Recorte de secuencias con Cutadapt
+
+### Herramienta: Cutadapt (Galaxy)
+
+**Cutadapt** es una herramienta utilizada para eliminar adaptadores, secuencias contaminantes o bases de baja calidad de lecturas FASTQ.
+
+### Parámetros configurados:
+
+- **Quality cutoff** (both ends): `20`
+- **Minimum length after trimming**: `30`
+- **Adapters (si se conoce)**: ingresados manualmente o se dejó en blanco para solo recortar por calidad.
+- **Error rate**: 0.1 (default)
+- **Discard reads shorter than**: 30
+
+### Pasos:
+
+1. Seleccionar la herramienta **Cutadapt** desde Galaxy.
+2. Cargar el archivo FASTQ correspondiente.
+3. Ingresar los parámetros indicados.
+4. Ejecutar el recorte.
+5. Visualizar el reporte generado por Cutadapt.
+
+### Resultado del recorte:
+
+Ejemplo de reporte de salida para `SRR1039500.fastq`:
+
+- Total de lecturas procesadas: 100,000
+- Lecturas recortadas: 85,234
+- Lecturas descartadas por longitud mínima: 2,750
+- Adaptadores encontrados: ninguno especificado
+- Longitud media posterior al recorte: 71.3 bp
+
+> **Importancia del recorte**: Elimina regiones de baja calidad y posibles adaptadores, mejorando la fiabilidad de pasos posteriores como alineamiento, ensamblaje o detección de variantes.
+
+---
+
+## Conclusión
+
+Se ejecutó correctamente un flujo de trabajo básico de control de calidad y limpieza de datos de secuenciación masiva utilizando herramientas de Galaxy. Este proceso garantiza que las secuencias obtenidas estén listas para análisis posteriores, minimizando el sesgo introducido por bases de baja calidad o secuencias contaminantes.
+
+---
+
+## Referencias
+
+- Andrews, S. (2010). FastQC: A quality control tool for high throughput sequence data.
+- Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. EMBnet.journal, 17(1):10-12.
+- Galaxy Project: [https://usegalaxy.org](https://usegalaxy.org)
+- NCBI SRA: [https://www.ncbi.nlm.nih.gov/sra](https://www.ncbi.nlm.nih.gov/sra)

@@ -61,11 +61,7 @@ En esta actividad, se busca trabajar con datos biológicos en formato FASTQ, que
 El siguiente código utiliza la biblioteca `Biopython`, una herramienta poderosa para trabajar con datos biológicos. Este script permite leer un archivo FASTQ, extraer las secuencias y sus calidades, y mostrarlas en la consola.
 
 ```python
-from Bio import SeqIO
-
-def calcular_calidad_fastq(archivo_fastq):
-    """
-    def leer_fastq(ruta_archivo):
+def leer_fastq(ruta_archivo):
     """Lee un archivo FASTQ y devuelve las secuencias y calidades."""
     secuencias = []
     calidades = []

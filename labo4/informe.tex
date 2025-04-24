@@ -1,0 +1,104 @@
+\documentclass[fleqn,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} % Para incluir imágenes
+\usepackage{geometry} % Para ajustar los márgenes
+\usepackage{multicol} % Para usar múltiples columnas
+\usepackage{amsmath} % Para fórmulas matemáticas
+\geometry{a4paper, margin=1in}
+
+% Información del título
+\title{\textbf{\Huge BÚSQUEDA DE EXONES}}
+
+\begin{document}
+
+% Primera hoja con la información de la universidad y los datos del curso
+\begin{titlepage}
+    \centering
+    \vspace*{1cm} % Espacio al principio de la hoja
+    {\LARGE \textbf{UNIVERSIDAD NACIONAL DE SAN ANTONIO ABAD DEL CUSCO} \par}
+    \vspace{0.5cm}
+    {\Large FACULTAD DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA, INFORMÁTICA Y MECÁNICA \par}
+    \vspace{0.5cm}
+    {\Large ESCUELA PROFESIONAL DE INGENIERÍA INFORMÁTICA Y DE SISTEMAS \par}
+    \vfill
+    \includegraphics[width=0.25\linewidth]{Escudo_UNSAAC.png}  
+    
+    % Datos del curso y trabajo
+    {\Large \textbf{CURSO: BIOINFORMÁTICA} \par}
+    \vspace{0.5cm}
+    {\Large \textbf{TRABAJO: BÚSQUEDA DE EXONES} \par}
+    
+    \vspace{0.5cm}
+    {\Large \textbf{PROFESORA: MARIA DEL PILAR VENEGAS VERGARA} \par}
+    \vspace{1cm}
+
+    % Datos del alumno
+    {\Large \textbf{ALUMNO: EFRAIN VITORINO MARÍN } \par}
+    \vspace{0.5cm}
+    {\Large \textbf{CÓDIGO: 160337} \par}
+    \vfill
+
+    % Semestre
+    {\Large \textbf{2025-I} \par}
+    \vspace{1cm}
+\end{titlepage}
+
+\flushbottom
+\maketitle
+\thispagestyle{empty}
+
+\section*{Actividad 1: Responder a las siguientes interrogantes}
+
+\begin{enumerate}
+    \item \textbf{¿Qué es exón?}
+    
+    Un \textbf{exón} es una secuencia de nucleótidos dentro de un gen que contiene información codificante, es decir, que se traduce en proteínas. Durante el proceso de transcripción y maduración del ARN, los exones se conservan y se empalman entre sí para formar el ARN mensajero (ARNm) funcional:
+    \[
+    \text{Gen} = \underbrace{\text{Exón}_1}_{\text{codificante}} + \underbrace{\text{Intrón}_1}_{\text{no codificante}} + \underbrace{\text{Exón}_2}_{\text{codificante}} + \cdots
+    \]
+    \[
+    \text{ARNm final} = \text{Exón}_1 + \text{Exón}_2 + \cdots
+    \]
+    
+    \item \textbf{¿Qué es intrón?}
+    
+    Un \textbf{intrón} es una secuencia no codificante dentro de un gen. Los intrones son transcritos junto con los exones en el ARN primario, pero son eliminados durante el proceso de empalme (\textit{splicing}):
+    \[
+    \text{ARN primario} = \text{Exón}_1 + \text{Intrón}_1 + \text{Exón}_2 + \cdots
+    \]
+    \[
+    \text{Empalme:} \quad \text{Intrón}_1 \rightarrow \text{eliminado}
+    \]
+    \[
+    \text{ARNm final} = \text{Exón}_1 + \text{Exón}_2 + \cdots
+    \]
+    
+    \item \textbf{¿Cómo se detectan exones?}
+    
+    Los exones se detectan mediante técnicas bioinformáticas que comparan secuencias de ADN o ARN con exones de referencia. Se utilizan algoritmos de comparación de patrones como Levenshtein y Hamming:
+    \[
+    d_H(s_1, s_2) = \sum_{i=1}^{n} [s_1(i) \neq s_2(i)]
+    \]
+    \[
+    d_L(s_1, s_2) = \text{mínimo número de operaciones para transformar } s_1 \text{ en } s_2
+    \]
+    También se emplean alineamientos de secuencias y anotaciones genómicas.
+    
+    \item \textbf{¿Cómo se detectan intrones?}
+    
+    Los intrones se detectan indirectamente, identificando primero los exones. Las regiones entre exones que no coinciden con ningún exón de referencia se consideran intrones:
+    \[
+    \text{Gen} = \text{Exón}_1 + \boxed{\text{Intrón}_1} + \text{Exón}_2
+    \]
+    Herramientas de análisis genómico y secuenciación de ARN permiten identificar los puntos de corte (\textit{splicing sites}).
+    
+    \item \textbf{¿Qué es exón de referencia?}
+    
+    Un \textbf{exón de referencia} es una secuencia conocida y validada experimentalmente que representa un exón típico de un gen. Se utiliza como patrón para identificar exones similares:
+    \[
+    \text{Secuencia candidata} \approx \text{Exón de referencia}
+    \]
+    Su uso es fundamental para detectar mutaciones, inserciones o deleciones mediante comparación con este modelo estándar.
+\end{enumerate}
+
+\end{document}

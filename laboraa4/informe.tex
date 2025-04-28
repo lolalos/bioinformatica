@@ -1,0 +1,353 @@
+\documentclass[fleqn,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}      % Para incluir imágenes
+\usepackage{geometry}      % Para ajustar márgenes
+\usepackage{amsmath,amssymb}% Para matemáticas
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\geometry{a4paper, margin=1in}
+
+% Estilo para código Python
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    tabsize=2,
+    language=Python
+}
+
+\begin{document}
+
+%---------------------- portada ----------------------
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    {\LARGE\bfseries UNIVERSIDAD NACIONAL DE SAN ANTONIO ABAD DEL CUSCO\par}
+    \vspace{0.5cm}
+    {\Large FACULTAD DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA, INFORMÁTICA Y MECÁNICA\par}
+    \vspace{0.5cm}
+    {\Large ESCUELA PROFESIONAL DE INGENIERÍA INFORMÁTICA Y DE SISTEMAS\par}
+    \vfill
+    \includegraphics[width=0.25\linewidth]{Escudo_UNSAAC.png}\par
+    \vfill
+    {\Large\bfseries CURSO: BIOINFORMÁTICA\par}
+    \vspace{0.3cm}
+    {\Large\bfseries TRABAJO: BÚSQUEDA DE PATRONES\par}
+    \vspace{0.3cm}
+    {\Large\bfseries PROFESORA: MARIA DEL PILAR VENEGAS VERGARA\par}
+    \vspace{1cm}
+    {\Large\bfseries ALUMNO: EFRAIN VITORINO MARÍN\par}
+    {\Large\bfseries CÓDIGO: 160337\par}
+    \vfill
+    {\Large 2025‑I\par}
+\end{titlepage}
+
+\setcounter{page}{1}
+\pagestyle{plain}
+
+%---------------------- contenido ----------------------
+\section*{1. ¿Qué es mutación?}
+\textbf{Definición:}  
+Una mutación es un cambio en la secuencia de nucleótidos de un genoma, ya sea por sustitución, inserción, eliminación o reorganización de bases.
+
+\bigskip
+\textbf{Ejemplos:}
+\begin{itemize}
+    \item Sustitución: \texttt{ATG} \(\to\) \texttt{ACG} (T \(\to\) C).
+    \item Inserción:    \texttt{ATG} \(\to\) \texttt{ATCG} (se inserta C).
+    \item Deleción:     \texttt{ATG} \(\to\) \texttt{AG}  (se elimina T).
+\end{itemize}
+
+\textbf{Aplicaciones:}
+\begin{itemize}
+    \item Estudios de evolución molecular.
+    \item Identificación de enfermedades genéticas.
+    \item Desarrollo de resistencia a fármacos en patógenos.
+\end{itemize}
+
+\section*{2. ¿Qué es un k-mero esquivo?}
+\textbf{Definición:}  
+Un \emph{k-mero esquivo} es una secuencia de longitud \(k\) que no aparece en un genoma o conjunto de datos dado, aunque habría \(\sigma^k\) posibles bajo el alfabeto de tamaño \(\sigma\).
+
+\medskip
+\begin{align}
+N_{\mathrm{total}} &= \sigma^k,\\
+N_{\mathrm{esquivos}} &= \sigma^k \;-\; N_{\mathrm{observados}}.
+\end{align}
+
+\textbf{Aplicaciones:}
+\begin{itemize}
+    \item Detección de errores en secuenciación.
+    \item Identificación de regiones genómicas raras.
+    \item Análisis de diversidad genética.
+\end{itemize}
+
+\section*{3. Porcentaje de similitud usando Hamming}
+\textbf{Definición:}  
+La distancia de Hamming \(D_H\) entre dos cadenas \(s_1,s_2\) de longitud \(n\) es
+\[
+D_H(s_1,s_2)
+= \sum_{i=1}^{n} \mathbf{1}\bigl(s_1[i]\neq s_2[i]\bigr),
+\]
+donde \(\mathbf{1}(\cdot)\) es la función indicadora.  
+El porcentaje de similitud es
+\[
+S_H = \Bigl(1 - \tfrac{D_H}{n}\Bigr)\times 100\%.
+\]
+
+\textbf{Aplicaciones:}
+\begin{itemize}
+    \item Alineamiento de reads de ADN.
+    \item Corrección de errores en secuenciación.
+\end{itemize}
+
+\section*{4. Porcentaje de similitud usando Levenshtein}
+\textbf{Definición:}  
+La distancia de Levenshtein \(D_L\) es el mínimo número de inserciones, eliminaciones o sustituciones para convertir \(s_1\) en \(s_2\). Se calcula con la recurrencia
+\[
+D_{i,j}=
+\begin{cases}
+\max(i,j), & \min(i,j)=0,\\[6pt]
+\min\bigl\{
+    D_{i-1,j}+1,\;
+    D_{i,j-1}+1,\;
+    D_{i-1,j-1} + [\,s_1[i]\neq s_2[j]\,]
+\bigr\}, & \text{en otro caso.}
+\end{cases}
+\]
+El porcentaje de similitud es
+\[
+S_L = \Bigl(1 - \tfrac{D_L}{\max(|s_1|,|s_2|)}\Bigr)\times 100\%.
+\]
+
+\textbf{Aplicaciones:}
+\begin{itemize}
+    \item Alineamiento de secuencias de distinta longitud.
+    \item Autocorrección ortográfica.
+\end{itemize}
+
+\section*{Resumen de fórmulas}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{ll}
+        \hline
+        Concepto     & Fórmula \\ \hline
+        Hamming      & \(S_H = \displaystyle\bigl(1-\tfrac{D_H}{n}\bigr)\times100\%\) \\
+        Levenshtein  & \(S_L = \displaystyle\bigl(1-\tfrac{D_L}{\max(|s_1|,|s_2|)}\bigr)\times100\%\) \\ \hline
+    \end{tabular}
+\end{table}
+Actividad 2: Implementar y comparar el algoritmo Boyer Moore y el algoritmo de
+fuerza bruta, que obtenga la cantidad de veces que aparece un patrón en una secuencia
+de ADN y la ubicación de dichas apariciones
+
+1. Objetivo
+Implementar y comparar dos algoritmos, Fuerza Bruta y Boyer-Moore, para encontrar un patrón dentro de una secuencia de ADN, determinando:
+
+La cantidad de apariciones (frecuencia).
+
+Las posiciones de las apariciones.
+
+El tiempo de ejecución de cada algoritmo.
+
+2. Especificaciones
+Entrada (Input):
+
+C: Secuencia de ADN (cadena de caracteres A, C, G, T) de tamaño variable.
+
+P: Patrón a buscar en la secuencia, también de tamaño variable.
+
+A: Algoritmo a utilizar: fuerza bruta o boyer moore.
+
+Salida (Output):
+
+F: Frecuencia de aparición del patrón en la secuencia.
+
+L: Lista de posiciones donde aparece el patrón.
+
+T: Tiempo de ejecución del algoritmo.
+
+3. Metodología paso a paso
+3.1. Preparación
+Se generaron secuencias de ADN de diferentes tamaños (1000, 5000, 10000, 20000, 50000 caracteres) usando combinaciones aleatorias de las bases A, C, G y T.
+
+Se definió un patrón fijo para la búsqueda: 'GCAT'.
+
+3.2. Implementación de algoritmos
+Fuerza Bruta:
+
+Se recorre toda la secuencia.
+
+Se compara el patrón con cada subcadena de longitud igual al patrón.
+
+Si coinciden, se registra la posición.
+
+Boyer-Moore:
+
+Se preprocesa el patrón para crear una tabla de "malos caracteres".
+
+La búsqueda salta posiciones inteligentemente cuando encuentra diferencias, acelerando el proceso.
+
+3.3. Ejecución y medición
+Para cada tamaño de secuencia:
+
+Se midió el tiempo de ejecución de cada algoritmo.
+
+Se registraron la frecuencia de aparición y las posiciones encontradas.
+
+Los tiempos fueron registrados en segundos utilizando funciones de medición de tiempo de alta precisión.
+
+3.4. Resultados
+Se construyó una tabla comparativa que muestra:
+
+Tamaño de la secuencia.
+
+Tiempo de ejecución de Fuerza Bruta.
+
+Tiempo de ejecución de Boyer-Moore.
+
+Se generó además un gráfico que compara visualmente los tiempos de ejecución de ambos algoritmos.
+
+codigo de implementacion en python  
+(# actividad3.py
+
+import time
+import random
+import matplotlib.pyplot as plt
+
+# ----------------------
+# Algoritmo Fuerza Bruta
+# ----------------------
+def fuerza_bruta(C, P):
+    posiciones = []
+    for i in range(len(C) - len(P) + 1):
+        if C[i:i+len(P)] == P:
+            posiciones.append(i)
+    return posiciones
+
+# ----------------------
+# Algoritmo Boyer-Moore
+# ----------------------
+def preprocess_boyer_moore(P):
+    bad_char = [-1]*256
+    for i in range(len(P)):
+        bad_char[ord(P[i])] = i
+    return bad_char
+
+def boyer_moore(C, P):
+    posiciones = []
+    bad_char = preprocess_boyer_moore(P)
+    m = len(P)
+    n = len(C)
+    s = 0
+    while(s <= n - m):
+        j = m - 1
+        while j >= 0 and P[j] == C[s+j]:
+            j -= 1
+        if j < 0:
+            posiciones.append(s)
+            s += (m - bad_char[ord(C[s+m])] if s+m < n else 1)
+        else:
+            s += max(1, j - bad_char[ord(C[s+j])])
+    return posiciones
+
+# ----------------------
+# Función de búsqueda
+# ----------------------
+def buscar_patron(C, P, A):
+    inicio = time.time()
+    if A == 'fuerza_bruta':
+        posiciones = fuerza_bruta(C, P)
+    elif A == 'boyer_moore':
+        posiciones = boyer_moore(C, P)
+    else:
+        raise ValueError("Algoritmo no válido. Use 'fuerza_bruta' o 'boyer_moore'.")
+    fin = time.time()
+    frecuencia = len(posiciones)
+    tiempo = fin - inicio
+    return frecuencia, posiciones, tiempo
+
+# ----------------------
+# Función para prueba masiva
+# ----------------------
+def prueba_tiempos():
+    bases = ['A', 'C', 'G', 'T']
+    tamanos = [1000, 5000, 10000, 20000, 50000]  # Tamaños de secuencias
+    tiempos_fb = []  # Fuerza Bruta
+    tiempos_bm = []  # Boyer Moore
+
+    P = 'GCAT'  # Patrón fijo
+
+    print(f"{'Tamaño':<10}{'Tiempo FB':<15}{'Tiempo BM':<15}")
+    print('-'*40)
+
+    for tam in tamanos:
+        C = ''.join(random.choices(bases, k=tam))
+
+        _, _, tiempo_fb = buscar_patron(C, P, 'fuerza_bruta')
+        _, _, tiempo_bm = buscar_patron(C, P, 'boyer_moore')
+
+        tiempos_fb.append(tiempo_fb)
+        tiempos_bm.append(tiempo_bm)
+
+        print(f"{tam:<10}{tiempo_fb:<15.6f}{tiempo_bm:<15.6f}")
+
+    return tamanos, tiempos_fb, tiempos_bm
+
+# ----------------------
+# Función para graficar
+# ----------------------
+def graficar(tamanos, tiempos_fb, tiempos_bm):
+    plt.figure(figsize=(10,6))
+    plt.plot(tamanos, tiempos_fb, marker='o', label='Fuerza Bruta')
+    plt.plot(tamanos, tiempos_bm, marker='s', label='Boyer Moore')
+    plt.title('Comparación de Tiempos de Ejecución')
+    plt.xlabel('Tamaño de Secuencia')
+    plt.ylabel('Tiempo (segundos)')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig('grafico_comparacion.png')  # Guarda el gráfico
+    plt.show()
+
+# ----------------------
+# Programa Principal
+# ----------------------
+if __name__ == "__main__":
+    # PRUEBAS DE TIEMPOS
+    tamanos, tiempos_fb, tiempos_bm = prueba_tiempos()
+
+    # GRAFICAR
+    graficar(tamanos, tiempos_fb, tiempos_bm)
+)
+
+
+
+
+Tamaño    Tiempo FB      Tiempo BM      
+----------------------------------------
+1000      0.000198       0.000247       
+5000      0.001485       0.001720       
+10000     0.003085       0.003408       
+20000     0.007065       0.008052       
+50000     0.017091       0.015372    
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot_10.png}
+    \caption{Enter Caption}
+    \label{fig:enter-label}
+\end{figure}
+
+\end{document}

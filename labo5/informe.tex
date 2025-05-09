@@ -1,0 +1,156 @@
+\documentclass[fleqn,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{amssymb}
+
+\geometry{a4paper, margin=1in}
+
+% Estilo para código Python
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    tabsize=2,
+    language=Python,
+    showstringspaces=false,
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    rulecolor=\color{black}
+}
+
+\begin{document}
+
+%---------------------- portada ----------------------
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    {\LARGE\bfseries UNIVERSIDAD NACIONAL DE SAN ANTONIO ABAD DEL CUSCO\par}
+    \vspace{0.5cm}
+    {\Large FACULTAD DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA, INFORMÁTICA Y MECÁNICA\par}
+    \vspace{0.5cm}
+    {\Large ESCUELA PROFESIONAL DE INGENIERÍA INFORMÁTICA Y DE SISTEMAS\par}
+    \vfill
+    \includegraphics[width=0.25\linewidth]{Escudo_UNSAAC.png}\par
+    \vfill
+    {\Large\bfseries CURSO: BIOINFORMÁTICA\par}
+    \vspace{0.3cm}
+    {\Large\bfseries TRABAJO: BÚSQUEDA DE PATRONES\par}
+    \vspace{0.3cm}
+    {\Large\bfseries PROFESORA: MARIA DEL PILAR VENEGAS VERGARA\par}
+    \vspace{1cm}
+    {\Large\bfseries ALUMNO: EFRAIN VITORINO MARÍN\par}
+    {\Large\bfseries CÓDIGO: 160337\par}
+    \vfill
+    {\Large 2025‑I\par}
+\end{titlepage}
+
+\setcounter{page}{1}
+\pagestyle{plain}
+\tableofcontents
+\newpage
+
+%---------------------- contenido ----------------------
+
+\section{¿Qué es alineamiento de secuencias?}
+\textbf{Definición:} \\
+El alineamiento de secuencias es una técnica utilizada para comparar dos o más secuencias biológicas (ADN, ARN o proteínas) con el fin de identificar regiones de similitud que pueden indicar relaciones funcionales, estructurales o evolutivas.
+
+\textbf{Aplicaciones:}
+\begin{itemize}
+    \item Comparación de genes entre especies.
+    \item Identificación de mutaciones.
+    \item Predicción de estructuras de proteínas.
+    \item Análisis filogenético.
+\end{itemize}
+
+\section{¿Qué es alineamiento global?}
+\textbf{Definición:} \\
+El alineamiento global busca alinear completamente dos secuencias desde el inicio hasta el final, optimizando la coincidencia total a lo largo de toda su longitud.
+
+\textbf{Aplicación principal:} \\
+Comparación de secuencias de longitud similar que se espera estén altamente relacionadas (por ejemplo, dos genes homólogos).
+
+\textbf{Algoritmo común:} Needleman-Wunsch.
+
+\textbf{Fórmula básica (recursiva):}
+
+Sea $F(i,j)$ la puntuación óptima para alinear los primeros $i$ caracteres de la secuencia A y los primeros $j$ de la secuencia B:
+
+\[
+F(i,j) = \max \begin{cases}
+F(i-1, j-1) + s(a_i, b_j) & \text{(emparejamiento)} \\
+F(i-1, j) + d & \text{(inserción)} \\
+F(i, j-1) + d & \text{(eliminación)}
+\end{cases}
+\]
+
+Donde:
+\begin{itemize}
+    \item $s(a_i, b_j)$ es la puntuación por coincidencia o desajuste.
+    \item $d$ es la penalización por gap (inserción o eliminación).
+\end{itemize}
+
+\section{¿Qué es alineamiento local?}
+\textbf{Definición:} \\
+El alineamiento local encuentra la región de mayor similitud entre dos secuencias, sin requerir que el alineamiento cubra toda la longitud de ambas.
+
+\textbf{Aplicación principal:} \\
+Detección de dominios conservados entre proteínas o regiones similares en genes que no son totalmente homólogos.
+
+\textbf{Algoritmo común:} Smith-Waterman.
+
+\textbf{Fórmula básica (recursiva):}
+
+\[
+F(i,j) = \max \begin{cases}
+0 \\
+F(i-1, j-1) + s(a_i, b_j) \\
+F(i-1, j) + d \\
+F(i, j-1) + d
+\end{cases}
+\]
+
+El valor $0$ asegura que se puedan descartar partes sin coincidencia.
+
+\section{¿Cuáles son las características del algoritmo del alineamiento Needleman-Wunsch?}
+\begin{itemize}
+    \item Es un algoritmo de alineamiento global.
+    \item Utiliza programación dinámica.
+    \item Rellena una matriz de puntuación para encontrar el alineamiento óptimo.
+    \item Tiene una complejidad de tiempo y espacio de $O(n \times m)$, donde $n$ y $m$ son las longitudes de las secuencias.
+    \item Se usa cuando las secuencias tienen longitudes similares y se desea alinear toda la secuencia.
+    \item Fórmula: (ya mencionada arriba).
+\end{itemize}
+
+\section{¿Cuáles son las características del algoritmo del alineamiento Smith-Waterman?}
+\begin{itemize}
+    \item Es un algoritmo de alineamiento local.
+    \item También utiliza programación dinámica.
+    \item Se enfoca en encontrar subsecuencias con alta similitud.
+    \item Permite descartar regiones no similares mediante el uso del valor $0$ en la matriz.
+    \item Ideal para encontrar dominios conservados.
+    \item Complejidad: $O(n \times m)$, pero puede ser optimizado con heurísticas o técnicas como BLAST.
+    \item Fórmula: (ya mencionada arriba).
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,201 @@
+\documentclass[fleqn,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{hyperref}
+
+\geometry{a4paper, margin=1in}
+
+% Estilo para código Python
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    tabsize=2,
+    language=Python,
+    showstringspaces=false,
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    rulecolor=\color{black}
+}
+
+% Estilo para la salida de consola o bloques de texto sin resaltar código
+\lstdefinestyle{outputstyle}{
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=none,
+    frame=single,
+    rulecolor=\color{black},
+    showstringspaces=false
+}
+
+\begin{document}
+
+% Encabezado principal
+\begin{center}
+    {\LARGE\bfseries UNIVERSIDAD NACIONAL DE SAN ANTONIO ABAD DEL CUSCO}\\[0.3cm]
+    {\Large FACULTAD DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA, INFORMÁTICA Y MECÁNICA}\\[0.3cm]
+    {\Large ESCUELA PROFESIONAL DE INGENIERÍA INFORMÁTICA Y DE SISTEMAS}\\[1cm]
+    \includegraphics[width=0.25\linewidth]{Escudo_UNSAAC.png}\\[1cm]
+    {\Large\bfseries CURSO: BIOINFORMÁTICA}\\[0.3cm]
+    {\Large\bfseries TRABAJO: ALINEAMIENTO DE SECUENCIAS}\\[0.3cm]
+    {\Large\bfseries PROFESORA: MARIA DEL PILAR VENEGAS VERGARA}\\[0.3cm]
+    {\Large\bfseries ALUMNO: EFRAIN VITORINO MARÍN}\\[0.3cm]
+    {\Large\bfseries CÓDIGO: 160337}\\[0.3cm]
+    {\Large 2025-I}
+\end{center}
+
+\bigskip
+
+\section*{¿Qué es el alineamiento de secuencias?}
+
+A continuación se describe la información que se tiene acerca del alineamiento de secuencias:
+
+\subsection*{1. Herramientas Seleccionadas}
+\\
+EMBOSS Needle (color verde)\\[0.3em]
+Biopython (color marrón)
+
+\subsection*{2. Propósito y Descripción de las Herramientas}
+
+\textbf{🔹 EMBOSS Needle}\\[0.3em]
+Propósito: Realiza alineamientos globales entre dos secuencias de ADN o proteínas.\\[0.3em]
+Algoritmo utilizado: Needleman-Wunsch, que permite comparar secuencias completas desde el primer hasta el último residuo.\\[0.3em]
+URL oficial del servicio web:\\ 
+\href{https://www.ebi.ac.uk/Tools/psa/emboss_needle/}{https://www.ebi.ac.uk/Tools/psa/emboss\_needle/}\\[0.3em]
+¿Por qué global? Porque intenta alinear toda la longitud de ambas secuencias, útil cuando se espera similitud entre ellas en toda su extensión (por ejemplo, genes ortólogos o versiones variantes).\\[0.3em]
+Fundamento del algoritmo Needleman-Wunsch:\\[0.3em]
+\begin{itemize}
+    \item Es un algoritmo de programación dinámica desarrollado en 1970.
+    \item Construye una matriz de puntuación comparando todos los pares de caracteres entre ambas secuencias.
+    \item Utiliza una función de penalización por huecos (gaps) y recompensa por coincidencias para optimizar la alineación.
+    \item Al final, realiza una trazabilidad inversa (traceback) desde la esquina inferior derecha para obtener la alineación óptima global.
+\end{itemize}
+
+\textbf{🔸 Biopython}\\[0.3em]
+Propósito: Es una biblioteca en Python diseñada para facilitar tareas bioinformáticas como manipulación de secuencias, análisis estructural, lectura de bases de datos y automatización de alineamientos.\\[0.3em]
+URL oficial:\\ 
+\href{https://biopython.org}{https://biopython.org}\\[0.3em]
+Ventaja clave: Permite automatizar tareas que normalmente requerirían múltiples herramientas gráficas o de línea de comandos, integrando todo en scripts reproducibles.
+
+\subsection*{3. Uso Práctico}
+
+\textbf{🧪 A. EMBOSS Needle}\\[0.5em]
+Secuencias comparadas:\\[0.5em]
+
+\begin{lstlisting}[style=outputstyle]
+shell
+Copiar
+Editar
+>seq1
+ATGCTAGCTAGCTAGCTA
+>seq2
+ATGCTGGCTAGCTAGTTA
+\end{lstlisting}
+
+Proceso:\\[0.3em]
+Ingresadas en el sitio web EMBOSS Needle\\[0.3em]
+Parámetros predeterminados:
+\begin{itemize}
+    \item Matriz: DNAfull
+    \item Gap opening penalty: 10.0
+    \item Gap extension penalty: 0.5
+\end{itemize}
+
+Resultado resumido:
+\begin{lstlisting}[style=outputstyle]
+bash
+Copiar
+Editar
+#=======================================
+# Aligned_sequences: 2
+# 1: seq1
+# 2: seq2
+# Matrix: DNAfull
+# Gap_penalty: 10.0
+# Extend_penalty: 0.5
+#
+# Length: 18
+# Identity:      16/18 (88.9%)
+# Similarity:    16/18 (88.9%)
+# Gaps:           0/18 ( 0.0%)
+# Score: 78.0
+#=======================================
+\end{lstlisting}
+
+Interpretación:\\[0.3em]
+Las dos secuencias son altamente similares (89\%).\\
+No se introdujeron huecos (gaps), lo cual indica buena conservación estructural.\\
+Esto puede implicar relación funcional o evolutiva entre ambas.
+
+\medskip
+
+\textbf{🧪 B. Biopython}\\[0.5em]
+Script de ejemplo: Traducción de una secuencia de ADN a proteína
+\begin{lstlisting}[style=pythonstyle]
+from Bio.Seq import Seq
+
+# Secuencia de ADN
+dna = Seq("ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG")
+
+# Traducción a proteína
+protein = dna.translate()
+
+print("Proteína traducida:", protein)
+\end{lstlisting}
+
+Salida:
+\begin{lstlisting}[style=outputstyle]
+markdown
+Copiar
+Editar
+Proteína traducida: MAIVMGR*KGAR*
+\end{lstlisting}
+
+Análisis:\\[0.3em]
+Se traduce automáticamente usando el código genético estándar.\\
+El asterisco (*) representa un codón de parada (stop codon).\\
+Ideal para ver cómo se expresa un gen a nivel proteico.
+
+\subsection*{4. Conclusiones y Valor Argumentado}
+
+\begin{center}
+\begin{tabular}{l l l l}
+\toprule
+Herramienta & Tipo de Análisis & Caso de Uso & Valor Bioinformático \\
+\midrule
+EMBOSS Needle & Alineamiento Global & Comparar genes completos & Precisión en relaciones evolutivas o estructurales\\
+Biopython & Análisis Programable & Traducción, manipulación de secuencias & Automatización, integración y escalabilidad\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+
+Argumentación final:\\[0.3em]
+EMBOSS Needle es ideal cuando se necesita conocer similitudes completas entre genes, como en estudios evolutivos o para validar hipótesis sobre conservación funcional.\\[0.3em]
+Biopython, por su parte, permite construir pipelines automatizados para el análisis masivo de datos genómicos, facilitando reproducibilidad y eficiencia en la investigación.
+
+\end{document}

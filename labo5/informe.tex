@@ -1,0 +1,537 @@
+\documentclass[fleqn,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{hyperref}
+
+\geometry{a4paper, margin=1in}
+
+% Estilo para código Python
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    tabsize=2,
+    language=Python,
+    showstringspaces=false,
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    rulecolor=\color{black}
+}
+
+% Estilo para la salida de consola
+\lstdefinestyle{outputstyle}{
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=none,
+    frame=single,
+    rulecolor=\color{black},
+    showstringspaces=false
+}
+
+\begin{document}
+
+%---------------------- Portada ----------------------
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    {\LARGE\bfseries UNIVERSIDAD NACIONAL DE SAN ANTONIO ABAD DEL CUSCO\par}
+    \vspace{0.5cm}
+    {\Large FACULTAD DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA, INFORMÁTICA Y MECÁNICA\par}
+    \vspace{0.5cm}
+    {\Large ESCUELA PROFESIONAL DE INGENIERÍA INFORMÁTICA Y DE SISTEMAS\par}
+    \vfill
+    \includegraphics[width=0.25\linewidth]{Escudo_UNSAAC.png}\par % Asegúrate que Escudo_UNSAAC.png esté en la misma carpeta o proporciona la ruta correcta
+    \vfill
+    {\Large\bfseries CURSO: BIOINFORMÁTICA\par}
+    \vspace{0.3cm}
+    {\Large\bfseries TRABAJO: BÚSQUEDA DE PATRONES\par}
+    \vspace{0.3cm}
+    {\Large\bfseries PROFESORA: MARIA DEL PILAR VENEGAS VERGARA\par}
+    \vspace{1cm}
+    {\Large\bfseries ALUMNO: EFRAIN VITORINO MARÍN\par}
+    {\Large\bfseries CÓDIGO: 160337\par}
+    \vfill
+    {\Large 2025-I\par}
+\end{titlepage}
+
+\setcounter{page}{1}
+\pagestyle{plain}
+\tableofcontents
+\newpage
+
+%---------------------- Contenido ----------------------
+
+\section{¿Qué es el alineamiento de secuencias?}
+\textbf{Definición:} \\
+El alineamiento de secuencias es una técnica utilizada para comparar dos o más secuencias biológicas (ADN, ARN o proteínas) con el fin de identificar regiones de similitud que pueden indicar relaciones funcionales, estructurales o evolutivas.
+
+\textbf{Aplicaciones:}
+\begin{itemize}
+    \item Comparación de genes entre especies.
+    \item Identificación de mutaciones.
+    \item Predicción de estructuras de proteínas.
+    \item Análisis filogenético.
+\end{itemize}
+
+\section{¿Qué es el alineamiento global?}
+\textbf{Definición:} \\
+El alineamiento global busca alinear completamente dos secuencias desde el inicio hasta el final, optimizando la coincidencia total a lo largo de toda su longitud.
+
+\textbf{Aplicación principal:} \\
+Comparación de secuencias de longitud similar que se espera estén altamente relacionadas (por ejemplo, dos genes homólogos).
+
+\textbf{Algoritmo común:} Needleman-Wunsch.
+
+\textbf{Fórmula básica (recursiva):}
+
+Sea $F(i,j)$ la puntuación óptima para alinear los primeros $i$ caracteres de la secuencia A y los primeros $j$ de la secuencia B:
+
+\[
+F(i,j) = \max \begin{cases}
+F(i-1, j-1) + s(a_i, b_j) & \text{(emparejamiento)} \\
+F(i-1, j) + d & \text{(inserción)} \\
+F(i, j-1) + d & \text{(eliminación)}
+\end{cases}
+\]
+
+Donde:
+\begin{itemize}
+    \item $s(a_i, b_j)$ es la puntuación por coincidencia o desajuste.
+    \item $d$ es la penalización por \textit{gap} (inserción o eliminación).
+\end{itemize}
+
+\section{¿Qué es el alineamiento local?}
+\textbf{Definición:} \\
+El alineamiento local encuentra la región de mayor similitud entre dos secuencias, sin requerir que el alineamiento cubra toda la longitud de ambas.
+
+\textbf{Aplicación principal:} \\
+Detección de dominios conservados entre proteínas o regiones similares en genes que no son totalmente homólogos.
+
+\textbf{Algoritmo común:} Smith-Waterman.
+
+\textbf{Fórmula básica (recursiva):}
+
+\[
+F(i,j) = \max \begin{cases}
+0 \\
+F(i-1, j-1) + s(a_i, b_j) \\
+F(i-1, j) + d \\
+F(i, j-1) + d
+\end{cases}
+\]
+
+El valor $0$ asegura que se puedan descartar partes sin coincidencia.
+
+\section{Características del algoritmo Needleman-Wunsch}
+\begin{itemize}
+    \item Es un algoritmo de alineamiento global.
+    \item Utiliza programación dinámica.
+    \item Rellena una matriz de puntuación para encontrar el alineamiento óptimo.
+    \item Tiene una complejidad de tiempo y espacio de $O(n \times m)$, donde $n$ y $m$ son las longitudes de las secuencias.
+    \item Se usa cuando las secuencias tienen longitudes similares y se desea alinear toda la secuencia.
+    \item Fórmula: (ya mencionada arriba).
+\end{itemize}
+
+\section{Características del algoritmo Smith-Waterman}
+\begin{itemize}
+    \item Es un algoritmo de alineamiento local.
+    \item También utiliza programación dinámica.
+    \item Se enfoca en encontrar subsecuencias con alta similitud.
+    \item Permite descartar regiones no similares mediante el uso del valor $0$ en la matriz.
+    \item Ideal para encontrar dominios conservados.
+    \item Complejidad: $O(n \times m)$, pero puede ser optimizado con heurísticas o técnicas como BLAST.
+    \item Fórmula: (ya mencionada arriba).
+\end{itemize}
+
+\section{Actividad 2: Implementación con BioPython}
+
+Utilizando la librería BioPython, utilice las implementaciones de Needleman-Wunsch y Smith-Waterman para alinear las secuencias de la Tabla 1.
+
+\subsection*{Instrucciones para la Actividad 2}
+
+La actividad se realiza en Visual Studio Code y los resultados se comparten mediante GitHub en el repositorio: \url{https://github.com/lolalos/bioinformatica/tree/main/labo5}.
+
+\begin{enumerate}
+    \item \textbf{Instalar BioPython:}
+    \begin{itemize}
+        \item Ejecute en la terminal:
+        \begin{lstlisting}[style=outputstyle, basicstyle=\ttfamily\footnotesize]
+pip install biopython
+        \end{lstlisting}
+    \end{itemize}
+    \item \textbf{Clonar el repositorio:}
+    \begin{itemize}
+        \item Clone el repositorio de GitHub donde se compartirá el trabajo:
+        \begin{lstlisting}[style=outputstyle, basicstyle=\ttfamily\footnotesize]
+git clone https://github.com/lolalos/bioinformatica.git
+        \end{lstlisting}
+        \item Ingrese a la carpeta \texttt{labo5} dentro del repositorio.
+    \end{itemize}
+    \item \textbf{Implementar los alineamientos:}
+    \begin{itemize}
+        \item Utilice las funciones de BioPython para realizar los alineamientos global y local.
+        \item Documente y suba los resultados al repositorio.
+    \end{itemize}
+\end{enumerate}
+
+\begin{table}[htbp] % Cambiado [h!] a [htbp] para mejor flotación
+\centering
+\caption{Secuencias de ADN y Proteína}
+\begin{tabular}{@{}cl@{}}
+\toprule
+\textbf{N°} & \textbf{Secuencia} \\
+\midrule
+1 & AACGTTTCCAGTCCAAATAGCTAGGC \\
+2 & AGTCGAAAT \\
+3 & GAGCAGCTGAACAAGCTGATGACCACCCTCCATAGCACCGCACCCCATTTTGTCCGCTGTATTATCCCCAATGAGTTTAAGCAATCGG \\
+4 & ACCGCTCCATAGCCGCACCCCATTTTGTCCGCTGTTTA \\
+5 & MTPMRKINPLMKLINHSFIDLPTPSNISAWWNFGSLLGACLILQITTGLFLAMHYSPDASTAFSSIAHITRDVNYGWIIRYLHANGASMFFICLFLHIGRGLYYGSFLYSETWNIGIILLLATMATAFMGYVLPWGQMSFWGATVITNLLSAIPYIGTDLVQWIWGGYSVDSPTLTRFFTFHFILPFIIAALATLHLLFLHETGSNNPLGITSHSDKITFHPYYTIKDALGLLLFLLSLMTLTLFSPDLLGDPDNYTLANPLA \\
+6 & ISAWWNFGSLLGACMILQITTGLFLAMHYYPDASTAFSSIALATRDVNYGWIIRYLHANGASMFFICLFLHIGRGLYYGSFLYSETWNIGIIFLQMSTATAFMGYVLPWGQMSFWGATVITNLLSAIPYIGTDLVQWIWGGYSVANPLA \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Implementación del código en Python}
+A continuación, se muestra el código Python utilizado para realizar los alineamientos con BioPython.
+
+\begin{lstlisting}[style=pythonstyle, caption={Código Python para alineamiento de secuencias con BioPython}, label={lst:biopython_code}]
+from Bio import pairwise2
+from Bio.pairwise2 import format_alignment
+try:
+    from Bio.Align.substitution_matrices import load
+    blosum62 = load("BLOSUM62")
+except ImportError:
+    # Fallback for older Biopython versions
+    from Bio.SubsMat.MatrixInfo import blosum62
+
+# GitHub Copilot
+
+
+# Secuencias de ADN
+seq1 = "AACGTTTCCAGTCCAAATAGCTAGGC"
+seq2 = "AGTCGAAAT"
+seq3 = ("GAGCAGCTGAACAAGCTGATGACCACCCTCCATAGCACCGCACCCCATTTTGTCCGCTGT"
+    "ATTATCCCCAATGAGTTTAAGCAATCGG")
+seq4 = "ACCGCTCCATAGCCGCACCCCATTTTGTCCGCTGTTTA"
+
+# Secuencias de proteína
+prot5 = ("MTPMRKINPLMKLINHSFIDLPTPSNISAWWNFGSLLGACLILQITTGLFLAMHYSPDASTAF"
+     "SSIAHITRDVNYGWIIRYLHANGASMFFICLFLHIGRGLYYGSFLYSETWNIGIILLLATMATA"
+     "FMGYVLPWGQMSFWGATVITNLLSAIPYIGTDLVQWIWGGYSVDSPTLTRFFTFHFILPFIIAAL"
+     "ATLHLLFLHETGSNNPLGITSHSDKITFHPYYTIKDALGLLLFLLSLMTLTLFSPDLLGDPDNYTLANPLA")
+prot6 = ("ISAWWNFGSLLGACMILQITTGLFLAMHYYPDASTAFSSIALATRDVNYGWIIRYLHANGASMFF"
+     "ICLFLHIGRGLYYGSFLYSETWNIGIIFLQMSTATAFMGYVLPWGQMSFWGATVITNLLSAIPYIG"
+     "TDLVQWIWGGYSVANPLA")
+
+pairs = [
+    ("Seq1 vs Seq2 (ADN)", seq1, seq2, "dna"),
+    ("Seq3 vs Seq4 (ADN)", seq3, seq4, "dna"),
+    # ("Prot5 vs Prot6 (Proteina)", prot5, prot6, "protein") # Descomentar para incluir proteínas
+]
+
+for title, a, b, kind in pairs:
+    print(title)
+    if kind == "dna":
+        # Needleman-Wunsch (global) con conteo simple match/mismatch
+        # Usar match_score=1, mismatch_score=0, gap_open_score=-1, gap_extend_score=-0.5
+        # Para replicar xx, se usa match=1, mismatch=0, open_gap=0, extend_gap=0
+        # Para un esquema más realista: match=2, mismatch=-1, open_gap=-2, extend_gap=-0.5
+        g_alignments = pairwise2.align.globalms(a, b, 2, -1, -0.5, -0.1) # Ejemplo con penalizaciones
+        # g_alignments = pairwise2.align.globalxx(a, b) # Original
+        print("Global (Needleman–Wunsch):")
+        if g_alignments:
+            print(format_alignment(*g_alignments[0]))
+        else:
+            print("No alignment found.")
+            
+        # Smith-Waterman (local)
+        # l_alignments = pairwise2.align.localxx(a, b) # Original
+        l_alignments = pairwise2.align.localms(a, b, 2, -1, -0.5, -0.1) # Ejemplo con penalizaciones
+        print("Local (Smith–Waterman):")
+        if l_alignments:
+            print(format_alignment(*l_alignments[0]))
+        else:
+            print("No alignment found.")
+            
+    else: # kind == "protein"
+        # Proteína: BLOSUM62, gap open=-10, gap extend=-0.5
+        g_alignments = pairwise2.align.globalds(a, b, blosum62, -10, -0.5)
+        print("Global (Needleman–Wunsch):")
+        if g_alignments:
+            print(format_alignment(*g_alignments[0]))
+        else:
+            print("No alignment found.")
+            
+        l_alignments = pairwise2.align.localds(a, b, blosum62, -10, -0.5)
+        print("Local (Smith–Waterman):")
+        if l_alignments:
+            print(format_alignment(*l_alignments[0]))
+        else:
+            print("No alignment found.")
+    print()
+\end{lstlisting}
+
+\subsection*{Resultado de la ejecución del código}
+La ejecución del script de Python anterior produce la siguiente salida en la consola:
+
+\begin{lstlisting}[style=outputstyle, caption={Salida de la consola al ejecutar el script de Python (ejemplo con globalxx/localxx)}, label={lst:biopython_output}]
+PS C:\Users\lovito99\Documents\GitHub\bioinformatica> & C:/Python312/python.exe c:/Users/lovito99/Documents/GitHub/bioinformatica/labo5/actividad2.py
+C:\Python312\Lib\site-packages\Bio\pairwise2.py:278: BiopythonDeprecationWarning: Bio.pairwise2 has been deprecated, and we intend to remove it in a future release of Biopython. As an alternative, please consider using Bio.Align.PairwiseAligner as a replacement, and contact the Biopython developers if you still need the Bio.pairwise2 module.
+  warnings.warn(
+Seq1 vs Seq2 (ADN)
+Global (Needleman–Wunsch):
+AACGTTTCCAGTCCAAATAGCTAGGC
+ | |  | | |    || |  |
+-A-G--T-C-G----AA-A--T----
+  Score=9
+
+Local (Smith–Waterman):
+2 ACGTTTCCAGTCCAAATAGCT
+  | |  | | |    || |  |
+1 A-G--T-C-G----AA-A--T
+  Score=9
+
+
+Seq3 vs Seq4 (ADN)
+Global (Needleman–Wunsch):
+GAGCAGCTGAACAAGCTGATGACCACCCTCCATAGCACCGCACCCCATTTTGTCCGCTGTATTATCCCCAATGAGTTTAAGCAATCGG
+          ||   |    |      ||||||||  |||||||||||||||| | | |         |  |  ||||     |
+----------AC---C----G------CTCCATAG--CCGCACCCCATTTTGT-C-C-G---------C--T--GTTT-----A----
+  Score=38
+
+Local (Smith–Waterman):
+11 ACAAGCTGATGACCACCCTCCATAGCACCGCACCCCATTTTGTCCGCTGTATTATCCCCAATGAGTTTAAGCAA
+   ||   |    |      ||||||||  |||||||||||||||| | | |         |  |  ||||     |
+ 1 AC---C----G------CTCCATAG--CCGCACCCCATTTTGT-C-C-G---------C--T--GTTT-----A
+  Score=38
+
+
+PS C:\Users\lovito99\Documents\GitHub\bioinformatica> 
+\end{lstlisting}
+\textit{Nota: La salida anterior corresponde a la ejecución con \texttt{globalxx} y \texttt{localxx}. Si se utilizan otras funciones de alineamiento o parámetros de penalización (como \texttt{globalms/localms} con valores específicos), los scores y alineamientos pueden variar.}
+
+\section{Actividad 3: Utilizando la implementación Needleman Wunsch de NCBI alinearlas secuencias de la tabla 1}
+Esta actividad consiste en utilizar herramientas en línea o APIs proporcionadas por el NCBI (National Center for Biotechnology Information) que implementen el algoritmo de Needleman-Wunsch para alinear las secuencias proporcionadas en la Tabla 1. Se deben documentar los pasos y los resultados obtenidos.
+
+\subsection*{Resultados Obtenidos de NCBI (Ejemplo)}
+\textit{La siguiente es una representación estructurada de una salida de ejemplo de la herramienta de alineamiento Needleman-Wunsch de NCBI, basada en el texto proporcionado por el usuario. Se han omitido elementos de la interfaz gráfica y texto no esencial para mayor claridad.}
+
+\subsubsection*{Sumario del Trabajo (Job Summary)}
+\begin{description}
+    \item[Título del Trabajo (Job Title):] Nucleotide Sequence
+    \item[ID de la Solicitud (Request ID):] \texttt{RID1USD2DMR114}
+    \item[Expiración de la Búsqueda:] 05-10 10:00 am
+    \item[Programa:] Needleman-Wunsch alignment of two sequences
+    \item[ID de la Consulta (Query ID):] \texttt{lcl|Query\_2824505} (dna)
+    \item[Descripción de la Consulta (Query Descr):] None
+    \item[Longitud de la Consulta (Query Length):] 26
+    \item[ID del Sujeto (Subject ID):] \texttt{lcl|Query\_2824507} (nucleic acid)
+    \item[Descripción del Sujeto (Subject Descr):] None
+    \item[Longitud del Sujeto (Subject Length):] 9
+\end{description}
+
+\subsubsection*{Alineamientos Significativos}
+Se reporta 1 secuencia que produce alineamientos significativos.
+
+\begin{table}[htbp]
+\centering
+\caption{Detalle del Alineamiento Significativo Reportado por NCBI}
+\label{tab:ncbi_significant_alignment_example}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Descripción} & \textbf{Score} & \textbf{Identidad (\%)} & \textbf{Accession} \\
+\midrule
+None provided        & -31.0          & 31.00\%                 & \texttt{Query\_2824507}       \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textit{Nota: La información anterior es un ejemplo formateado a partir de un extracto de texto. Los resultados reales de NCBI incluirían alineamientos visuales detallados y podrían variar según las secuencias y parámetros específicos. Los elementos de la interfaz de usuario de NCBI (como "Download All", "Manage columns", "Graphics", etc.) han sido omitidos.}
+
+\section{Actividad 4: Utilizando la implementación Needleman Wunsch y Smith Waterman de EMBL-EBI alinear las secuencias de la tabla 1}
+
+Esta actividad consiste en utilizar las herramientas EMBOSS Needle y EMBOSS Water del EMBL-EBI para realizar alineamientos globales y locales, respectivamente, de las secuencias de la Tabla 1.
+
+\subsection*{Instrucciones}
+\begin{itemize}
+    \item Acceda a EMBOSS Needle para alineamiento global (Needleman-Wunsch): \url{https://www.ebi.ac.uk/jdispatcher/psa/emboss_needle}
+    \item Acceda a EMBOSS Water para alineamiento local (Smith-Waterman): \url{https://www.ebi.ac.uk/jdispatcher/psa/emboss_water}
+\end{itemize}
+Se deben alinear las parejas de secuencias de la Tabla 1 (ADN con ADN, proteína con proteína) y documentar los resultados.
+
+\subsection*{Resultados con EMBOSS Needle (Alineamiento Global)}
+A continuación, se presentan los resultados de ejemplo obtenidos al alinear Seq1 (\texttt{AACGTTTCCAGTCCAAATAGCTAGGC}) y Seq2 (\texttt{AGTCGAAAT}) de la Tabla 1 utilizando EMBOSS Needle.
+
+\subsubsection*{Parámetros y Cabecera de la Ejecución}
+La siguiente cabecera fue generada por la herramienta EMBOSS Needle, detallando los parámetros utilizados en la ejecución.
+\begin{lstlisting}[style=outputstyle, caption={Cabecera del resultado de EMBOSS Needle (ejemplo Seq1 vs Seq2)}, basicstyle=\ttfamily\tiny, columns=flexible]
+########################################
+# Programa: aguja
+# Fecha de ejecución: viernes 9 de mayo de 2025 03:05:04
+# Línea de comando: needle
+# -auto
+# -salida estándar
+# -asequence emboss_needle-I20250509-030437-0533-29515839-p1m.asequence
+# -bsequence aguja_de_relieve-I20250509-030437-0533-29515839-p1m.bsequence
+# -archivo de datos EBLOSUM62
+# -gapopen 10.0
+# -gapextend 0.5
+# -endopen 10.0
+# -endextend 0.5
+Par #-aformat3
+# -sproteína1
+# -sprotein2
+# Align_format: par
+#Archivo_de_informe: stdout
+########################################
+\end{lstlisting}
+
+\subsubsection*{Sumario del Alineamiento}
+El sumario del alineamiento proporcionado por EMBOSS Needle es el siguiente:
+\begin{description}
+    \item[Secuencias Alineadas:] 2 (EMBOSS\_001 vs EMBOSS\_001, correspondiendo a Seq1 y Seq2)
+    \item[Matriz de Sustitución:] EBLOSUM62
+    \item[Penalización por Apertura de Gap (gapopen):] 10.0
+    \item[Penalización por Extensión de Gap (gapextend):] 0.5
+    \item[Longitud del Alineamiento:] 26
+    \item[Identidad:] 8/26 (30.8\%)
+    \item[Similitud:] 8/26 (30.8\%)
+    \item[Huecos (Gaps):] 17/26 (65.4\%)
+    \item[Puntuación (Score):] 38.0
+\end{description}
+
+\subsubsection*{Alineamiento Detallado}
+\begin{lstlisting}[style=outputstyle, caption={Alineamiento global de Seq1 vs Seq2 por EMBOSS Needle}, basicstyle=\ttfamily\footnotesize]
+#=======================================
+#
+# Secuencias alineadas: 2
+# 1: EMBOSS_001
+# 2: EMBOSS_001
+# Matriz: EBLOSUM62
+# Penalización por brecha: 10.0
+# Extender_penalidad: 0.5
+#
+# Longitud: 26
+# Identidad: 8/26 (30,8%)
+# Similitud: 8/26 (30,8%)
+# Huecos: 17/26 (65,4%)
+# Puntuación: 38.0
+#
+#
+#=======================================
+
+EMBOSS_001         1 AACGTTTCCAGTCCAAATAGCTAGGC     26
+                              ||||.||||        
+EMBOSS_001         1 ---------AGTCGAAAT--------      9
+
+
+#---------------------------------------
+#---------------------------------------
+\end{lstlisting}
+
+\textit{\textbf{Nota Importante sobre los Parámetros:}} Los resultados mostrados indican que se utilizó la matriz \texttt{EBLOSUM62} y se especificaron las secuencias como proteínas (\texttt{-sprotein1}, \texttt{-sprotein2}) en la ejecución de ejemplo, a pesar de que Seq1 y Seq2 son secuencias de ADN. Para un alineamiento biológicamente más significativo de secuencias de ADN, se deberían utilizar matrices de sustitución y parámetros de penalización apropiados para nucleótidos (por ejemplo, la matriz EDNAFULL, o un esquema simple de match/mismatch scores y penalizaciones de gap lineales o afines). El uso de EBLOSUM62 con secuencias de ADN puede llevar a interpretaciones erróneas de la similitud y la puntuación.
+
+\subsection*{Resultados con EMBOSS Water (Alineamiento Local)}
+\textit{En esta sección, se deben documentar los resultados obtenidos al alinear las mismas parejas de secuencias (y otras de la Tabla 1) utilizando EMBOSS Water. El formato de presentación puede ser similar al utilizado para EMBOSS Needle.}
+
+\subsubsection*{Ejemplo de Estructura para EMBOSS Water (SeqX vs SeqY)}
+    \paragraph{Parámetros y Cabecera de la Ejecución:}
+    \textit{Incluir la cabecera de EMBOSS Water, mostrando la matriz (e.g., EDNAFULL para ADN, BLOSUM62 para proteínas), gap open, gap extend.}
+    \begin{lstlisting}[style=outputstyle, caption={Cabecera del resultado de EMBOSS Water (ejemplo)}, basicstyle=\ttfamily\tiny, columns=flexible]
+# Ejemplo de cabecera de EMBOSS Water
+# Program: water
+# Rundate: ...
+# Commandline: water
+#    -asequence ...
+#    -bsequence ...
+#    -datafile EDNAFULL (o BLOSUM62 para proteinas)
+#    -gapopen ...
+#    -gapextend ...
+# ...
+    \end{lstlisting}
+
+    \paragraph{Sumario del Alineamiento:}
+    \textit{Extraer y listar las estadísticas clave del alineamiento local.}
+    \begin{description}
+        \item[Longitud del Alineamiento:] ...
+        \item[Identidad:] .../... (...)
+        \item[Similitud:] .../... (...)
+        \item[Huecos (Gaps):] .../... (...)
+        \item[Puntuación (Score):] ...
+    \end{description}
+
+    \paragraph{Alineamiento Detallado:}
+    \textit{Mostrar el o los mejores alineamientos locales encontrados.}
+    \begin{lstlisting}[style=outputstyle, caption={Alineamiento local por EMBOSS Water (ejemplo)}, basicstyle=\ttfamily\footnotesize]
+        ########################################
+        # Program: needle
+        # Rundate: Fri  9 May 2025 03:05:04
+        # Commandline: needle
+        #    -auto
+        #    -stdout
+        #    -asequence emboss_needle-I20250509-030437-0533-29515839-p1m.asequence
+        #    -bsequence emboss_needle-I20250509-030437-0533-29515839-p1m.bsequence
+        #    -datafile EBLOSUM62
+        #    -gapopen 10.0
+        #    -gapextend 0.5
+        #    -endopen 10.0
+        #    -endextend 0.5
+        #    -aformat3 pair
+        #    -sprotein1
+        #    -sprotein2
+        # Align_format: pair
+        # Report_file: stdout
+        ########################################
+        
+        #=======================================
+        #
+        # Aligned_sequences: 2
+        # 1: EMBOSS_001
+        # 2: EMBOSS_001
+        # Matrix: EBLOSUM62
+        # Gap_penalty: 10.0
+        # Extend_penalty: 0.5
+        #
+        # Length: 26
+        # Identity:       8/26 (30.8%)
+        # Similarity:     8/26 (30.8%)
+        # Gaps:          17/26 (65.4%)
+        # Score: 38.0
+        # 
+        #
+        #=======================================
+        
+        EMBOSS_001         1 AACGTTTCCAGTCCAAATAGCTAGGC     26
+                                      ||||.||||        
+        EMBOSS_001         1 ---------AGTCGAAAT--------      9
+        
+        
+        #---------------------------------------
+        #---------------------------------------
+    \end{lstlisting}
+\textit{Repetir para las diferentes parejas de secuencias de la Tabla 1, asegurándose de usar los parámetros adecuados (ADN o proteína) para cada par.}
+
+\end{document}

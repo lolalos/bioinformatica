@@ -1,0 +1,399 @@
+\documentclass[fleqn,10pt]{article}
+
+% --- Preámbulo: Paquetes ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{makecell}
+\usepackage{enumitem}
+
+% --- Configuración de página ---
+\geometry{a4paper, margin=1in}
+
+% --- Definiciones de colores para código ---
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% --- Estilo para código Python ---
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    tabsize=2,
+    language=Python,
+    showstringspaces=false,
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    rulecolor=\color{black}
+}
+
+% --- Estilo para salida de consola o bloques de texto ---
+\lstdefinestyle{outputstyle}{
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=none,
+    frame=single,
+    rulecolor=\color{black},
+    showstringspaces=false
+}
+
+\begin{document}
+
+% --- Encabezado principal ---
+\begin{center}
+    {\LARGE\bfseries UNIVERSIDAD NACIONAL DE SAN ANTONIO ABAD DEL CUSCO}\\[0.3cm]
+    {\Large FACULTAD DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA, INFORMÁTICA Y MECÁNICA}\\[0.3cm]
+    {\Large ESCUELA PROFESIONAL DE INGENIERÍA INFORMÁTICA Y DE SISTEMAS}\\[1cm]
+    \includegraphics[width=0.25\linewidth]{Escudo_UNSAAC.png}\\[1cm]
+    {\Large\bfseries CURSO: BIOINFORMÁTICA}\\[0.3cm]
+    {\Large\bfseries TRABAJO: LABORATORIO 8 }\\[0.3cm]
+    {\Large\bfseries PROFESORA: MARIA DEL PILAR VENEGAS VERGARA}\\[0.3cm]
+    {\Large\bfseries ALUMNO: EFRAIN VITORINO MARÍN}\\[0.3cm]
+    {\Large\bfseries CÓDIGO: 160337}\\[0.3cm]
+    {\Large 2025-I}
+\end{center}
+\newpage
+
+% --- Contenido principal ---
+\section{Actividad 1: Responder a las siguientes interrogantes}
+
+\subsection{1. ¿Qué es alineamiento múltiple?}
+
+El \textbf{alineamiento múltiple} es una extensión del alineamiento por pares que permite comparar simultáneamente tres o más secuencias de ADN, ARN o proteínas para identificar regiones de similitud que pueden indicar relaciones funcionales, estructurales o evolutivas.
+
+\begin{tcolorbox}[breakable, colback=blue!5!white,colframe=blue!75!black,title=Definición Formal]
+Sea $S = \{s_1, s_2, \ldots, s_k\}$ un conjunto de $k$ secuencias sobre un alfabeto $\Sigma$. Un alineamiento múltiple $A$ es una matriz donde:
+\begin{itemize}
+    \item Cada fila $i$ representa la secuencia $s_i$ con posibles gaps (-)
+    \item Todas las filas tienen la misma longitud $L$
+    \item Al remover los gaps de la fila $i$, se obtiene la secuencia original $s_i$
+\end{itemize}
+\end{tcolorbox}
+
+\textbf{Características principales:}
+\begin{enumerate}[label=\textbf{\alph*)}]
+    \item \textbf{Conservación evolutiva}: Identifica regiones conservadas entre especies
+    \item \textbf{Análisis funcional}: Revela sitios activos y dominios funcionales
+    \item \textbf{Predicción estructural}: Ayuda a predecir estructuras secundarias y terciarias
+\end{enumerate}
+
+\subsection{2. ¿Qué diferencias tienen los algoritmos de alineamiento múltiple, frente a alineamiento local y global?}
+
+\begin{table}[htbp]
+\centering
+\caption{Comparación entre tipos de alineamiento}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Característica} & \textbf{Global} & \textbf{Local} & \textbf{Múltiple} \\
+\midrule
+\makecell{Número de \\ secuencias} & 2 & 2 & $\geq 3$ \\
+\makecell{Cobertura de \\ la secuencia} & Completa & Parcial & Variable \\
+\makecell{Complejidad \\ temporal} & $O(mn)$ & $O(mn)$ & $O(L^k)$ \\
+\makecell{Algoritmo \\ principal} & \makecell{Needleman-\\Wunsch} & \makecell{Smith-\\Waterman} & \makecell{ClustalW, MUSCLE,\\T-Coffee} \\
+\makecell{Función \\ objetivo} & \makecell{Maximizar similitud\\global} & \makecell{Encontrar regiones\\similares} & \makecell{Optimizar suma\\de pares} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[breakable, colback=green!5!white,colframe=green!75!black,title=Teorema de Complejidad]
+\textbf{Teorema}: El problema de alineamiento múltiple óptimo es NP-completo.
+
+\textbf{Demostración}: Se reduce del problema de la subsecuencia común más larga (LCS) para múltiples secuencias, que es conocido como NP-completo.
+
+\textbf{Implicación}: Para $k$ secuencias de longitud promedio $n$, la complejidad es $O(n^k)$, lo que hace inviable la solución exacta para grandes valores de $k$.
+\end{tcolorbox}
+
+\textbf{Diferencias fundamentales:}
+
+\begin{enumerate}[label=\textbf{\Roman*.}]
+    \item \textbf{Dimensionalidad del problema}:
+    \begin{itemize}
+        \item Alineamiento por pares: Matriz 2D
+        \item Alineamiento múltiple: Hipermatriz $k$-dimensional
+    \end{itemize}
+    
+    \item \textbf{Estrategias algorítmicas}:
+    \begin{itemize}
+        \item \textbf{Progresivas}: Construyen el alineamiento paso a paso (ClustalW)
+        \item \textbf{Iterativas}: Refinan alineamientos iniciales (MUSCLE)
+        \item \textbf{Consistencia}: Maximizan la consistencia entre alineamientos por pares (T-Coffee)
+    \end{itemize}
+    
+    \item \textbf{Función de puntuación}:
+    \begin{align}
+        \text{Score}_{\text{múltiple}} &= \sum_{i<j} \text{Score}(s_i, s_j) \quad \text{(Suma de pares)} \\
+        \text{Score}_{\text{global}} &= \max_{A} \sum_{i=1}^{L} \sigma(A[i,1], A[i,2]) \\
+        \text{Score}_{\text{local}} &= \max_{A,i,j} \sum_{k=i}^{j} \sigma(A[k,1], A[k,2])
+    \end{align}
+\end{enumerate}
+
+\begin{tcolorbox}[breakable, colback=red!5!white,colframe=red!75!black,title=Limitaciones Computacionales]
+\textbf{Problema}: La programación dinámica exacta para $k$ secuencias requiere:
+\begin{itemize}
+    \item Espacio: $O(n^k)$
+    \item Tiempo: $O(kn^k)$
+\end{itemize}
+
+\textbf{Solución}: Uso de heurísticas y aproximaciones que sacrifican optimalidad por eficiencia computacional.
+\end{tcolorbox}
+\newpage
+
+\section{Actividad 2: Utilizar el algoritmo Blast de NCBI para alinear las secuencias de la tabla 1}
+
+\begin{table}[htbp]
+\centering
+\caption{Secuencias para alineamiento múltiple}
+\begin{tabular}{|p{2cm}|p{12cm}|}
+\hline
+\textbf{Secuencia} & \textbf{Secuencia completa} \\
+\hline
+Secuencia 1 & \texttt{MMALGRAFAIVFCLIQAVSGESGNAQDGDLEDADADDHSFWCHSQLEVDGSQHLLTCAFNDSDINTANLEFQI CGALLRVKCLTLNKLQDIYFIKTSEFLLIGSSNICVKLGQKNLTCKNMAINTIVKAEAPSDLKVVYRKEANDF LVTFNAPHLKKKYLKKVKHDVAYRPARGESNWTHVSLFHTRTTIPQRKLRPKAMYEIKVRSIPHNDYFKGFWS EWSPSSTFETPEPKNQGGWDPVLPSVTILSLFSVFLLVILAHLVLWKRIKPVVWPSLPDHKKTLEQLCHKPKT SLNVSFNPESFLDCQIHEVKGVEARDEVESFLPNDLPAQPEELETNIPQGHRAAVHSANRSPETSVSPPLNKL RESPLRCLATCNAPPLLSSRSPDYRDGDRNRPPVYQDLLPNSGNTNVPVPVPQPLPFQSGILIPVSQRQPIST SSVLNQEEAYVTMSSFYQNK} \\
+\hline
+Secuencia 2 & \texttt{NRGETGAPAGPRGPAGPAGSSGKDGVGGLPGPIGPPSPRGRTGDIGPAGPPGTPGPPGPPGPPGGGFDFSFVA QPSQEKAPDPFRHYRADDANVARDRDLEVDTTLKSLSQQKDLAIENIRSPEGTKKDPARSCRDLKMCHPEWKS GEYFVDPNQGCDEDAVKVYCNMETGETCVYPTQANIPQKNWYTSKNAKDKKHVWFGETMSDGFQFEYGGEGSD AADVNIQLTFLRLMATEASQNITYHCKNSIAYMDQQAGNLKKALLLQGSNEIEIRAEGNSRFTYSEETEDGYT RHTGAWGKTVIDADYKTTKTSRLPIIDIAPMDVGAPDQEFGIDVGP} \\
+\hline
+Secuencia 3 & \texttt{MSFSRRPKITKSDIVDTVYFQISLNIRNNNLKLEKKKIRLVIDAFFEELKGNLALNNVIEFRSFGTEVRKRK GRLNPRSEYKVLHDHVAYYHTYQGFPSHSCHIPKDLALFTFYEIWVEATNRRGSARSDVLTLDEVDTVTTDPPP EVHVSRVGGLEDQLSVRWVSPPALKLKERVWGIKG} \\
+\hline
+Secuencia 4 & \texttt{TGGGATGATTCCACACCCGCGCCCGGCACCCGCGTCCGCGCCGTAGCCATCAACAAGCAGTCACAGCACATGA CGGAGGTTGTGAGGCGCTGCCTCCACGATGAGCGCTACTCAGATAGCGATA} \\
+\hline
+Secuencia 5 & \texttt{ACTATAAAGGCGTCAAGCCGTGTTCTAGATAATAATAAGTATTGGGCAACTTATTAGTCTCCGGTCCAACAAC CTGAACGGATTTGATGAAATGGGC} \\
+\hline
+Secuencia 6 & \texttt{ATATTGGTGTGTGAGGCGTTATAATTCCAAGAAGCAAGTGAACTTTGATAGAACAGGTCTTCGGCTTCGTGGT TAAACTTGTCCAAATGTGAGGCGGCCTGTTCCTCAATGGTGGACTGAGCAGCAGTTACAGCAACAAGGCTGAG AAGGAGCCAGGAAGAGCTTGACATCGTCGCCTCCACAGCCAAGATCACATCCACTGAATGACTTTCCCTAGAC TAAAACCTCCTCATGAGATTTTCTCTCTTATCAGCCTTTGAACTTGGGTTGGGCGCTGAGCAGGAAAGACCAA AAAAAGAAAAAGAAGAAGAACACAGTAAACAATCTGCTGAGCCAATATAAAGTTCATCCTGGAGAGGACAGAT ATGTAACAGATTTTAGAATAATTTTTTAAAGTGAATCAAATAAGAATACGTTATTCTTTAATCCTAGAGAACC TTATCACCTCCGGTCAAATCTCAGGTATCTTGGGGCCCGAGGGCCCAGTATGTCCACGATGCATACCTGCAGA TAAAGATCGCGTCTTGGGTGAGGGCTCCGCGTTATCAATTGGGTCCCCGAACTGGGAAGACTGAAATGCTAGT TTGCGAGTATATAAGAAGACCTCTATAGTGCGAGTATAAGATCATCGAAGAAGGTCGGCGGCTTGTCCGTTTA CTCACTGCTCTTGTGACATAGTAACAACAAGTAACCTCGCCTTAATTGACTGAAGGCATTCCTCGTGCAGTGT GAGGCG} \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\subsection*{Resultados de BLAST para las secuencias de la tabla}
+
+Las secuencias 1 y 2 son proteínas largas, mientras que la 3 es más corta.
+
+A continuación se muestra un ejemplo de resultado obtenido al alinear las secuencias 1 y 2 utilizando el algoritmo de Needleman-Wunsch (BLAST NCBI):
+
+\begin{tcolorbox}[breakable, colback=gray!5!white, colframe=gray!75!black, title=Resultado de alineamiento (BLAST NCBI)]
+\textbf{Título profesional:} Secuencia de proteínas
+
+\textbf{ID de consulta:} lcl|Consulta\_2676595 (aminoácido)\\
+\textbf{Descripción de la consulta:} producto proteico sin nombre\\
+\textbf{Longitud de la consulta:} 458
+
+\textbf{ID de sujeto:} lcl|Consulta\_2676597 (aminoácido)\\
+\textbf{Descripción del tema:} Ninguno\\
+\textbf{Longitud del tema:} 338
+
+\textit{Nota: La búsqueda expira el 29/05 a las 06:37.}
+\end{tcolorbox}
+% \newpage % Removed this newpage to allow more flexible page breaking
+
+\begin{lstlisting}[style=outputstyle,caption={Resultado detallado del alineamiento entre Secuencia 1 y Secuencia 2}]
+resultado de alineamiento 
+ID de secuencia: Consulta_2676597 Longitud: 338 Número de coincidencias: 1
+Rango 1: 1 a 338 GráficosPróximo partidoPartido anterior
+Estadísticas de alineación para el partido n.º 1
+Puntuación NW	Identidades	Aspectos positivos	Brechas
+-213	72/499(14%)	115/499(23%)	202/499(40%)
+Consulta 1 MMALGRAFAI---------------VFCLIQAVSGESGNAQDGDLEDADAD--------- 36
+                  AAVL + S + GD + A            
+Sbjct 1 NRGETGAPAGPRGPAGPAGSSGKDGVGGLPGPIGPPSPRGRTGDIGPAGPPGTPGPPGPP 60
+
+Consulta 37 -------DHSFWCHSQLEV--DGSQHLLTCAFNDSDINTA---NLEFQICGALLRVKCLT 84
+                   D SF ED + H + ADN + LE T
+Sbjct 61 GPPGGGGFDFSFVAQPSQEKAPDPFRH-----YRADDANVARDRDLEVDT----------T 105
+
+Consulta 85 LNKLQDIYFIKTSEFLLIGSSNICVKLGQKNLTCKNMAINTIVK---AEAPSDLKVVYRK 141
+            LL QK+L +N+ KA + DLK+ + +
+Objeto 106 LKSLSQ----------------------QKDLAIENIRSPEGTKKDPARSCRDLKMCHPE 143
+
+Consulta 142 -EANDFLVTFNAPHLKKKYLKKVKHDVAYRPARGESNWTHVSLFHTRTTIPQRKLRPKAM 200
+             ++ ++ VN + D E+ TV + T+ IPQ+       
+Objeto 144 WKSGEYFVDPN---------QGCDEDAVKVYCNMETGETCV--YPTQANIPQKNWYTSKN 192
+
+Consulta 201 YEIKVRSIPHNDYFKGFWSEWSPSSTFETPEPKNQGGWDPVLPSVTILSLFSVFLLVILA 260
+             + KKW + S F+ V +TLL +        
+Objeto 193 AKDK----------KHVWFGETMSDGFQFEYGGEGSDAADVNIQLTFLRLMAT------- 235
+
+Consulta 261 HVLWKKRIKPVVWPSLPDHKKTLEQLCHKPKTSLNVSFNPESFLDCQIHEVKGVEARDEV 320
+                                          + S N+++ H + D+
+Sbjct 236 ------------------------------FACILIDAD----------HCKNSIAYMDQQ 255
+
+Consulta 321 ESFLPNDLPAQ-PEELETNIPQGHRAAVHSANRSPETSVSPPLNKLRESPLRCLATCNAP 379
+               LLQ E+ERT + K               
+Sbjct 256 AGNLKKALLLQGSNEIEIRAEGNSRFTYSEETEDGYTRHTGAWGK--------------- 300
+
+Consulta 380 PLLSSRSPDYRDGDRNRPPVYQDLLPNSGNTNVPVPVPQPLPFQSGILIPVSQRQPISTS 439
+               + DY+ +R P+ D+ P + VP + GI +           
+Sbjct 301 ---TVIDADYKTTKTSRLPII-DIAP------MDVGAPDQ---EFGIDV----------- 336
+
+Consulta 440 SVLNQEEAYVTMSSFYQNK 458
+                               
+Sbjct 337 -----------------GP 338
+\end{lstlisting}
+
+Gráficos de: \textbf{unnamed protein product} lcl|Query\_2061159 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{1 y2.png}
+    \caption{Alineamiento entre Secuencia 1 y Secuencia 2}
+    \label{fig:aln-1-2}
+\end{figure}
+
+\textbf{RESUMEN}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\textbf{Especie} & \textbf{Región genómica} & \textbf{Función biológica} & \textbf{Score} & \textbf{Relación (BLAST)} & \textbf{Identidad} & \textbf{Brechas} \\
+\hline
+No especificada & Producto proteico sin nombre & No determinada & -213 & Parecido no significativo & 14\% (Positivos: 23\%) & 40\% \\
+\hline
+\end{tabular}
+\caption{Resumen del alineamiento entre Secuencia 1 y Secuencia 2}
+\end{table}
+\subsection*{Alineamiento entre Secuencia 3 y Secuencia 4}
+
+Las secuencias 3 y 4 corresponden a diferentes tipos de biomoléculas: la Secuencia 3 es una proteína (aminoácidos) y la Secuencia 4 es ADN (nucleótidos). Por lo tanto, no es posible realizar un alineamiento directo entre ambas usando BLAST estándar, ya que requieren formatos y algoritmos distintos (BLASTp para proteínas, BLASTn para nucleótidos, BLASTx/tBLASTn para traducciones).
+
+\begin{tcolorbox}[breakable, colback=yellow!5!white, colframe=yellow!75!black, title=Nota Importante]
+\textbf{Error de BLAST:} \\
+\texttt{Error: No es posible alinear directamente una secuencia de proteína con una de nucleótidos.}
+
+Esto indica que BLAST no puede realizar el alineamiento ni como nucleótido ni como proteína, ya que requieren tipos de entrada compatibles (proteína vs proteína o nucleótido vs nucleótido).
+\end{tcolorbox}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\linewidth]{2 y3.jpg}
+    \caption{Intento de alineamiento entre Secuencia 3 (proteína) y Secuencia 4 (ADN). No es posible realizar el alineamiento directo debido a la diferencia de tipo de secuencia.}
+    \label{fig:aln-3-4}
+\end{figure}
+\subsection*{Alineamiento entre Secuencia 5 y Secuencia 6}
+
+A continuación se presenta el resultado del alineamiento entre las Secuencias 5 y 6 utilizando el algoritmo de Needleman-Wunsch (BLAST NCBI):
+
+\begin{tcolorbox}[breakable, colback=gray!5!white, colframe=gray!75!black, title=Resultado de alineamiento (BLAST NCBI)]
+\textbf{Título del trabajo:} Secuencia de nucleótidos
+
+\textbf{ID de consulta:} lcl|Query\_3909303 (ADN)\\
+\textbf{Descripción de la consulta:} Ninguna\\
+\textbf{Longitud de la consulta:} 97
+
+\textbf{ID de sujeto:} lcl|Query\_3909305 (ADN)\\
+\textbf{Descripción del sujeto:} Ninguna\\
+\textbf{Longitud del sujeto:} 736
+
+\textit{Nota: La búsqueda expira el 29/05 a las 07:31.}
+\end{tcolorbox}
+
+\begin{lstlisting}[style=outputstyle,caption={Resultado detallado del alineamiento entre Secuencia 5 y Secuencia 6}]
+Sequence ID: Query_3909305 Length: 736 Number of Matches: 1
+Range 1: 1 to 736 Graphics Next Match Previous Match
+Alignment statistics for match #1
+NW Score   Identities   Gaps   Strand
+-1234      85/736(12%)  639/736(86%)  Plus/Plus
+
+Query  1    AC-----------------TATAA------------------------------------  7
+            |                  |||||                                    
+Sbjct  1    ATATTGGTGTGTGAGGCGTTATAATTCCAAGAAGCAAGTGAACTTTGATAGAACAGGTCT  60
+
+Query  8    -------------------------------AGGCG---------TCAA-----------  16
+                                           |||||         ||||           
+Sbjct  61   TCGGCTTCGTGGTTAAACTTGTCCAAATGTGAGGCGGCCTGTTCCTCAATGGTGGACTGA  120
+
+Query  17   ---GCCGT----------------------------------------------------  21
+               || ||                                                    
+Sbjct  121  GCAGCAGTTACAGCAACAAGGCTGAGAAGGAGCCAGGAAGAGCTTGACATCGTCGCCTCC  180
+
+Query       ------------------------------------------------------------  
+                                                                        
+Sbjct  181  ACAGCCAAGATCACATCCACTGAATGACTTTCCCTAGACTAAAACCTCCTCATGAGATTT  240
+
+Query       ------------------------------------------------------------  
+                                                                        
+Sbjct  241  TCTCTCTTATCAGCCTTTGAACTTGGGTTGGGCGCTGAGCAGGAAAGACCAAAAAAAGAA  300
+
+Query  22   -------------------------------------------GTTC-------------  25
+                                                       ||||             
+Sbjct  301  AAAGAAGAAGAACACAGTAAACAATCTGCTGAGCCAATATAAAGTTCATCCTGGAGAGGA  360
+
+Query  26   ------------------TAGA-TAAT----------------AATAAG-------TATT  43
+                              |||| ||||                ||||||       ||||
+Sbjct  361  CAGATATGTAACAGATTTTAGAATAATTTTTTAAAGTGAATCAAATAAGAATACGTTATT  420
+
+Query  44   -----------GGGCAACTTATTA------------------------------------  56
+                       | | | ||||| |                                    
+Sbjct  421  CTTTAATCCTAGAGAACCTTATCACCTCCGGTCAAATCTCAGGTATCTTGGGGCCCGAGG  480
+
+Query  57   -----------------------------------------GTCT------------CCG  63
+                                                     ||||            |||
+Sbjct  481  GCCCAGTATGTCCACGATGCATACCTGCAGATAAAGATCGCGTCTTGGGTGAGGGCTCCG  540
+
+Query  64   -------------GTCC-------------------------------------------  67
+                         ||||                                           
+Sbjct  541  CGTTATCAATTGGGTCCCCGAACTGGGAAGACTGAAATGCTAGTTTGCGAGTATATAAGA  600
+
+Query       ------------------------------------------------------------  
+                                                                        
+Sbjct  601  AGACCTCTATAGTGCGAGTATAAGATCATCGAAGAAGGTCGGCGGCTTGTCCGTTTACTC  660
+
+Query  68   -------------------AACAAC---------------------CTGAACGGATT--T  85
+                               ||||||                     ||||| | |||  |
+Sbjct  661  ACTGCTCTTGTGACATAGTAACAACAAGTAACCTCGCCTTAATTGACTGAAGGCATTCCT  720
+
+Query  86   GATGAAATG---GGC-  97
+              || | ||   ||| 
+Sbjct  721  CGTGCAGTGTGAGGCG  736
+\end{lstlisting}
+
+
+
+\textbf{Datos relevantes de las secuencias alineadas:}
+\begin{itemize}
+    \item \textbf{Tipo de molécula:} Ambas secuencias son \textbf{ADN} (ácido desoxirribonucleico).
+    \item \textbf{Especie:} No especificada en el resultado; normalmente se obtiene de la base de datos NCBI si se consulta con identificadores reales.
+    \item \textbf{Explicación de la muestra (NCBI):} Las secuencias corresponden a fragmentos de ADN proporcionados para el ejercicio; en un análisis real, la base de datos NCBI mostraría detalles como fuente, organismo, y anotaciones funcionales.
+    \item \textbf{Cromosoma:} No determinado; en NCBI, este dato aparece si la secuencia está mapeada a un cromosoma específico.
+    \item \textbf{Gen o genes expresados:} No determinado; se requiere anotación funcional o consulta directa en NCBI.
+    \item \textbf{Función biológica:} No determinada; la función se obtiene de la anotación en NCBI si la secuencia corresponde a un gen conocido.
+    \item \textbf{Región codificante/no codificante:} No especificada; en NCBI se indica si la secuencia es exón, intrón, promotor, etc.
+    \item \textbf{Resultado del alineamiento:}
+    \begin{itemize}
+        \item \textbf{Score (NW):} $-1234$ (puntuación baja, indica poca similitud global).
+        \item \textbf{Identidad:} $85/736$ (12\%).
+        \item \textbf{Gaps:} $639/736$ (86\%).
+        \item \textbf{Alineamiento:} Ver bloque detallado anterior.
+    \end{itemize}
+    \item \textbf{Cantidad de HSP (High-scoring Segment Pair):} $1$ (un segmento alineado con puntuación significativa).
+    \item \textbf{Cantidad de MSP (Maximal Segment Pair):} $1$ (corresponde al mismo segmento en este caso).
+    \item \textbf{Taxonomía (según score más alto):} No determinada; normalmente se clasifica según el organismo con mayor similitud en la base de datos NCBI.
+\end{itemize}
+
+\textbf{Interpretación:} El alineamiento muestra baja identidad y requiere muchos gaps, lo que sugiere que las secuencias no están estrechamente relacionadas o sólo comparten regiones cortas similares. Para una interpretación biológica completa, se recomienda consultar los identificadores en NCBI para obtener especie, función, cromosoma y taxonomía.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\linewidth]{56.png}
+    \caption{Alineamiento entre Secuencia 5 y Secuencia 6}
+    \label{fig:aln-5-6}
+\end{figure}
+
+
+\end{document}

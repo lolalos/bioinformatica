@@ -1,0 +1,149 @@
+\documentclass[fleqn,10pt]{article}
+
+% --- Preámbulo: Paquetes ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{makecell}
+\usepackage{enumitem}
+
+% --- Configuración de página ---
+\geometry{a4paper, margin=1in}
+
+% --- Definiciones de colores para código ---
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% --- Estilo para código Python ---
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    tabsize=2,
+    language=Python,
+    showstringspaces=false,
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    rulecolor=\color{black}
+}
+
+% --- Estilo para salida de consola o bloques de texto ---
+\lstdefinestyle{outputstyle}{
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=none,
+    frame=single,
+    rulecolor=\color{black},
+    showstringspaces=false
+}
+
+\begin{document}
+
+% --- Encabezado principal ---
+\begin{center}
+    {\LARGE\bfseries UNIVERSIDAD NACIONAL DE SAN ANTONIO ABAD DEL CUSCO}\\[0.3cm]
+    {\Large FACULTAD DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA, INFORMÁTICA Y MECÁNICA}\\[0.3cm]
+    {\Large ESCUELA PROFESIONAL DE INGENIERÍA INFORMÁTICA Y DE SISTEMAS}\\[1cm]
+    \includegraphics[width=0.25\linewidth]{Escudo_UNSAAC.png}\\[1cm]
+    {\Large\bfseries CURSO: BIOINFORMÁTICA}\\[0.3cm]
+    {\Large\bfseries TRABAJO: LABORATORIO 9 }\\[0.3cm]
+    {\Large\bfseries PROFESORA: MARIA DEL PILAR VENEGAS VERGARA}\\[0.3cm]
+    {\Large\bfseries ALUMNO: EFRAIN VITORINO MARÍN}\\[0.3cm]
+    {\Large\bfseries CÓDIGO: 160337}\\[0.3cm]
+    {\Large 2025-I}
+\end{center}
+\newpage
+
+% --- Contenido principal ---
+\section{Actividad 1: Fundamentos Teóricos del Ensamblaje de Genomas}
+
+\begin{enumerate}
+    \item \textbf{Ensamblaje de Genoma}
+    \begin{itemize}
+        \item \textbf{Definición:} \\
+        Proceso de reconstruir una secuencia genómica $S$ a partir de un conjunto de lecturas (subcadenas) $R = \{r_1, r_2, \dots, r_n\}$.
+        \item \textbf{Objetivo Formal (Problema SCS - Shortest Common Superstring):} \\
+        Encontrar la cadena $S$ más corta tal que:
+        \[ \forall r_i \in R, r_i \text{ es subcadena de } S. \]
+        \item \textbf{Complejidad:} NP-Hard (no existe algoritmo eficiente conocido en el caso general).
+    \end{itemize}
+
+    \item \textbf{Camino y Ciclo Euleriano}
+    \begin{itemize}
+        \item \textbf{Definiciones (Grafo Dirigido $G=(V,E)$):}
+        \begin{itemize}
+            \item \textbf{Camino Euleriano:} Secuencia de aristas que recorre cada arista exactamente una vez.
+            \item \textbf{Ciclo Euleriano:} Camino euleriano que comienza y termina en el mismo vértice.
+        \end{itemize}
+        \item \textbf{Teorema de Euler (Grafos Dirigidos):}
+        \begin{itemize}
+            \item \textbf{Ciclo Euleriano:}
+            \[ \forall v \in V, \text{grado de entrada}(v) = \text{grado de salida}(v) \text{ y } G \text{ es fuertemente conexo.} \]
+            \item \textbf{Camino Euleriano:} \\
+            Existen vértices $u,v$ (posiblemente iguales) tales que:
+            \begin{itemize}
+                \item $\text{grado de salida}(u) = \text{grado de entrada}(u) + 1,$
+                \item $\text{grado de entrada}(v) = \text{grado de salida}(v) + 1,$
+                \item $\forall w \in V, w \neq u, w \neq v, \text{grado de entrada}(w) = \text{grado de salida}(w).$
+            \end{itemize}
+            Si $u=v$, todos los vértices tienen grados equilibrados (y el camino es un ciclo).
+        \end{itemize}
+    \end{itemize}
+
+    \item \textbf{Algoritmos para Ensamblaje De Novo}
+    \begin{enumerate}[label=\alph*)]
+        \item \textbf{Grafos de De Bruijn}
+        \begin{itemize}
+            \item \textbf{Nodos:} $(k-1)$-mers (subcadenas de longitud $k-1$).
+            \item \textbf{Aristas:} $k$-mers (subcadenas de longitud $k$).
+            \item \textbf{Construcción:} Para cada $k$-mer $x_1x_2\dots x_k$:
+            \begin{itemize}
+                \item Nodo inicial $= x_1x_2\dots x_{k-1}$,
+                \item Nodo final $= x_2x_3\dots x_k$.
+            \end{itemize}
+            \item \textbf{Ensamblaje:} Buscar un camino/ciclo euleriano que recorra todas las aristas.
+        \end{itemize}
+
+        \item \textbf{OLC (Overlap-Layout-Consensus)}
+        \begin{itemize}
+            \item \textbf{Overlap (Solapamiento):}
+            \[ ov(r_i, r_j) = \text{máximo prefijo de } r_j \text{ que coincide con un sufijo de } r_i. \]
+            \item \textbf{Grafo de Solapamiento:}
+            \begin{itemize}
+                \item Nodos = lecturas $r_i$.
+                \item Aristas = solapamientos $ov(r_i, r_j)$.
+            \end{itemize}
+            \item \textbf{Objetivo:} Encontrar un camino hamiltoniano (NP-Hard, se usan heurísticas).
+        \end{itemize}
+
+        \item \textbf{String Graphs}
+        \begin{itemize}
+            \item Grafo simplificado del OLC, eliminando redundancias.
+            \item \textbf{Objetivo:} Identificar caminos únicos sin colapsar ramas divergentes.
+            \item \textbf{Ecuación de Consenso:}
+            \[ S = \operatorname*{arg\,min}_{S'} \sum_{r_i \in R} \text{edit\_distance}(S', r_i). \]
+        \end{itemize}
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
